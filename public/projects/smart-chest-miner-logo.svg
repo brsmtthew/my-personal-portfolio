@@ -1,0 +1,44 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="720" fill="#ffffff"/>
+  <g transform="translate(190 86)">
+    <path d="M170 10c36 0 69 13 95 36" stroke="#ff6a00" stroke-width="10" stroke-linecap="round"/>
+    <path d="M170 42c25 0 48 9 66 25" stroke="#ff6a00" stroke-width="10" stroke-linecap="round"/>
+    <path d="M170 74c15 0 29 5 40 15" stroke="#ff6a00" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="170" cy="118" r="8" fill="#ff6a00"/>
+
+    <path d="M83 205 170 154l87 51-87 51-87-51Z" fill="#ff6a00"/>
+    <path d="M83 205v98l87 51v-98l-87-51Z" fill="#111111"/>
+    <path d="M257 205v98l-87 51v-98l87-51Z" fill="#1a1a1a"/>
+    <path d="M83 205 170 256l87-51" stroke="#ffffff" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M170 256v98" stroke="#ffffff" stroke-width="7"/>
+    <path d="M225 267h40" stroke="#ff6a00" stroke-width="8"/>
+    <path d="M118 283c0-11 8-20 18-20s18 9 18 20c0 8-4 14-10 18v28h-16v-28c-6-4-10-10-10-18Z" fill="#ffffff"/>
+
+    <path d="M129 218c9-42 73-42 82 0" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+    <path d="M128 231h84" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
+    <path d="M142 224h17l9-22 17 49 12-27h17" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <path d="M36 135c-28 25-43 62-40 101" stroke="#ff6a00" stroke-width="3" stroke-linecap="round"/>
+    <path d="M304 135c28 25 43 62 40 101" stroke="#ff6a00" stroke-width="3" stroke-linecap="round"/>
+    <path d="M16 311c40 58 105 87 175 78 46-6 87-26 119-58" stroke="#ff6a00" stroke-width="3" stroke-dasharray="4 8" stroke-linecap="round"/>
+
+    <circle cx="15" cy="285" r="21" fill="#ffffff" stroke="#ff6a00" stroke-width="4"/>
+    <path d="M2 285h8l5-10 8 23 6-13h10" stroke="#ff6a00" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="170" cy="380" r="22" fill="#ffffff" stroke="#ff6a00" stroke-width="4"/>
+    <text x="170" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#ff6a00">O₂</text>
+    <circle cx="330" cy="285" r="21" fill="#ffffff" stroke="#ff6a00" stroke-width="4"/>
+    <path d="M330 272v18" stroke="#ff6a00" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="330" cy="295" r="6" stroke="#ff6a00" stroke-width="4"/>
+  </g>
+
+  <text x="360" y="495" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="68" font-weight="500" letter-spacing="34" fill="#171717">SMART</text>
+  <path d="M374 425 420 506h-32l-14-26-14 26h-32l46-81Z" fill="#ff6a00"/>
+  <circle cx="374" cy="488" r="5" fill="#ffffff"/>
+  <text x="360" y="570" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="500" letter-spacing="28" fill="#ff6a00">CHEST</text>
+  <path d="M111 554h62" stroke="#ff6a00" stroke-width="5"/>
+  <path d="M547 554h62" stroke="#ff6a00" stroke-width="5"/>
+  <text x="360" y="622" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="400" letter-spacing="26" fill="#171717">MINER</text>
+  <path d="M111 611h92" stroke="#171717" stroke-width="4"/>
+  <path d="M517 611h92" stroke="#171717" stroke-width="4"/>
+  <text x="360" y="668" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" letter-spacing="8" fill="#171717">VITAL • SIGNS • MONITORING • IOT SYSTEM</text>
+</svg>

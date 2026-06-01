@@ -1,11 +1,21 @@
+import { useEffect, useState } from 'react'
 import type { Profile, Stat } from '../../data/portfolio'
 
 type HeroProps = {
   profile: Profile
   stats: Stat[]
+  onNavigate: (href: string) => void
 }
 
-function Hero({ profile, stats }: HeroProps) {
+const ROLES = [
+  'IT Specialist',
+  'AI Workflow Developer',
+  'EMR Systems Specialist',
+  'IoT Developer',
+  'Full Stack Developer',
+]
+
+function Hero({ profile, stats, onNavigate }: HeroProps) {
   const initials = profile.name
     .split(' ')
     .filter(Boolean)
@@ -13,6 +23,36 @@ function Hero({ profile, stats }: HeroProps) {
     .map((part) => part[0])
     .join('')
     .toUpperCase()
+
+  const [displayRole, setDisplayRole] = useState('')
+  const [roleIndex, setRoleIndex] = useState(0)
+  const [phase, setPhase] = useState<'typing' | 'paused' | 'deleting'>('typing')
+
+  useEffect(() => {
+    const target = ROLES[roleIndex]
+    let timeout: ReturnType<typeof setTimeout>
+
+    if (phase === 'typing') {
+      if (displayRole.length < target.length) {
+        timeout = setTimeout(() => setDisplayRole(target.slice(0, displayRole.length + 1)), 80)
+      } else {
+        timeout = setTimeout(() => setPhase('paused'), 2200)
+      }
+    } else if (phase === 'paused') {
+      timeout = setTimeout(() => setPhase('deleting'), 0)
+    } else {
+      if (displayRole.length > 0) {
+        timeout = setTimeout(() => setDisplayRole(displayRole.slice(0, -1)), 45)
+      } else {
+        timeout = setTimeout(() => {
+          setRoleIndex((i) => (i + 1) % ROLES.length)
+          setPhase('typing')
+        }, 0)
+      }
+    }
+
+    return () => clearTimeout(timeout)
+  }, [displayRole, phase, roleIndex])
 
   return (
     <section id="home" className="hero-surface soft-grid-bg relative border-b border-white/10">
@@ -26,7 +66,16 @@ function Hero({ profile, stats }: HeroProps) {
               {profile.name}
             </span>
             <span className="block bg-linear-to-r from-[#00f2ea] via-[#cffffb] to-[#8defff] bg-clip-text text-4xl text-transparent sm:text-5xl lg:text-6xl">
-              {profile.role}
+              {displayRole}
+              <span
+                className="inline-block w-0.5 translate-y-0.5 bg-[#00f2ea]"
+                style={{
+                  height: '0.85em',
+                  animation: 'cursor-blink 1s step-end infinite',
+                  marginLeft: '2px',
+                }}
+                aria-hidden="true"
+              />
             </span>
           </h1>
           <p className="text-balance mx-auto mt-5 max-w-2xl font-heading text-xl font-semibold leading-8 text-white sm:text-2xl lg:mx-0">
@@ -41,6 +90,22 @@ function Hero({ profile, stats }: HeroProps) {
                 {area}
               </span>
             ))}
+          </div>
+          <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
+            <button
+              type="button"
+              onClick={() => onNavigate('#work')}
+              className="primary-button rounded-lg bg-[#00f2ea] px-6 py-3 font-heading text-sm font-bold text-[#051424] transition hover:bg-[#7ffff8]"
+            >
+              View My Work
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate('#contact')}
+              className="rounded-lg border border-[#00f2ea]/40 px-6 py-3 font-heading text-sm font-bold text-[#cffffb] transition hover:border-[#00f2ea] hover:bg-[#00f2ea]/10"
+            >
+              Hire Me
+            </button>
           </div>
         </div>
 
@@ -61,8 +126,12 @@ function Hero({ profile, stats }: HeroProps) {
             )}
           </div>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            {stats.map((stat) => (
-              <div key={stat.label} className="rounded-lg border border-white/10 bg-[#010f1f]/70 p-4 transition hover:-translate-y-1 hover:border-[#00f2ea]/40">
+            {stats.map((stat, i) => (
+              <div
+                key={stat.label}
+                className="animate-fade-up rounded-lg border border-white/10 bg-[#010f1f]/70 p-4 transition hover:-translate-y-1 hover:border-[#00f2ea]/40"
+                style={{ animationDelay: `${0.45 + i * 0.15}s` }}
+              >
                 <p className="font-heading text-lg font-bold text-[#d4e4fa]">{stat.value}</p>
                 <p className="mt-1 text-sm leading-5 text-[#849492]">{stat.label}</p>
               </div>

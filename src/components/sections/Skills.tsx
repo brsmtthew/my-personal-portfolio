@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { IconType } from 'react-icons'
 import {
   FiActivity,
+  FiArrowRight,
   FiCpu,
   FiDatabase,
   FiFileText,
@@ -13,6 +14,7 @@ import {
   FiSmartphone,
   FiTool,
   FiWifi,
+  FiX,
 } from 'react-icons/fi'
 import {
   SiAsana,
@@ -143,6 +145,8 @@ type SkillPreviewCard = {
   impact: string
   tools: string[]
   skills: string[]
+  expertSkills?: string[]
+  activeSkills?: string[]
   sections?: {
     title: string
     skills: string[]
@@ -358,6 +362,8 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Turns complex work into clearer steps, faster drafts, stronger documentation, and more consistent technical outputs.',
     tools: ['ChatGPT', 'Codex', 'Claude', 'Gemini'],
     skills: ['AI Agents', 'Prompting', 'Documentation', 'Research'],
+    expertSkills: ['ChatGPT', 'Claude', 'AI Agents', 'Prompting', 'Documentation'],
+    activeSkills: ['ChatGPT', 'Claude', 'AI Agents', 'Prompting', 'Documentation', 'Research'],
   },
   {
     title: 'IT Support and Lab Operations',
@@ -368,6 +374,8 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Keeps daily operations stable through practical troubleshooting across hardware, software, networks, printers, and workstations.',
     tools: ['Desktop Apps', 'Websites', 'Network Configuration', 'Printer Troubleshooting'],
     skills: ['Networking', 'Hardware', 'Software Support', 'Computer Lab Support'],
+    expertSkills: ['Network Configuration', 'Network Troubleshooting', 'Hardware Troubleshooting', 'Software Troubleshooting', 'Printer Troubleshooting', 'Computer Lab Support', 'Networking', 'Hardware'],
+    activeSkills: ['Desktop Apps', 'Websites', 'Network Configuration', 'Network Troubleshooting', 'Hardware Troubleshooting', 'Software Troubleshooting', 'Printer Troubleshooting', 'Computer Lab Support', 'Networking', 'Hardware', 'Software Support'],
   },
   {
     title: 'Design and Print Production',
@@ -378,6 +386,8 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Combines design software, production accuracy, print equipment operation, and technical documentation in a fast-paced workflow.',
     tools: ['Adobe Photoshop', 'Canva', 'Figma', 'Printing Equipment'],
     skills: ['Adobe Photoshop', 'Canva', 'Printing Equipment', 'Graphic Layout'],
+    expertSkills: ['Adobe Photoshop', 'Canva', 'Printing Equipment', 'Graphic Layout'],
+    activeSkills: ['Adobe Photoshop', 'Canva', 'Printing Equipment', 'Graphic Layout', 'Technical Documentation'],
   },
   {
     title: 'Full Stack Web App Development',
@@ -388,6 +398,17 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Covers the practical pieces needed for responsive websites, admin dashboards, records systems, APIs, secure login, database-driven apps, and production deployment.',
     tools: ['React.js', 'Node.js', 'Firebase', 'Vercel'],
     skills: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React.js', 'Node.js', 'MySQL', 'Firebase Auth'],
+    expertSkills: [
+      'HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React.js', 'Tailwind CSS',
+      'Firebase Realtime Database', 'Firestore', 'Firebase Auth',
+      'Git', 'GitHub', 'VS Code', 'Vite',
+    ],
+    activeSkills: [
+      'HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React.js', 'Tailwind CSS',
+      'Node.js', 'Express.js',
+      'MySQL', 'Firebase Realtime Database', 'Firestore', 'SQLite',
+      'Firebase Auth', 'JWT', 'Git', 'GitHub', 'VS Code', 'Vite', 'Vercel', 'Firebase Hosting',
+    ],
     sections: [
       {
         title: 'Frontend',
@@ -476,6 +497,8 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Supports mobile app workflows from interface buildout to authentication, cloud data, API integration, and cross-platform deployment planning.',
     tools: ['Android', 'Flutter', 'React Native', 'Firebase'],
     skills: ['Android', 'Kotlin', 'Swift', 'Flutter', 'React Native', 'Firebase', 'Supabase', 'NativeWind'],
+    expertSkills: ['Android', 'Java', 'Kotlin', 'Android Studio', 'React Native'],
+    activeSkills: ['Android', 'Java', 'Kotlin', 'Android Studio', 'React Native', 'Expo', 'Firebase', 'NativeWind', 'React Native Paper', 'Node.js API'],
     sections: [
       {
         title: 'Native Mobile Development',
@@ -504,6 +527,8 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Useful for office tools, local records systems, reporting utilities, printing workflows, desktop databases, and workstation-based applications.',
     tools: ['.NET MAUI', 'Electron.js', 'SQLite', 'Crystal Reports'],
     skills: ['VB.NET', 'C# WinForms', 'C# WPF', 'Electron.js', 'Tauri', 'SQLite', 'SQL Server', 'RDLC Reports'],
+    expertSkills: ['VB.NET', 'C# WinForms', 'C# WPF', 'Visual Studio', 'SQL Server', 'SQLite', 'Crystal Reports', 'RDLC Reports'],
+    activeSkills: ['VB.NET', 'C# WinForms', 'C# WPF', '.NET Framework', 'Visual Studio', 'SQLite', 'MySQL', 'SQL Server', 'MS Access', 'Crystal Reports', 'RDLC Reports', 'iTextSharp'],
     sections: [
       {
         title: 'Windows Desktop Development',
@@ -532,6 +557,14 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Helps choose practical stack pairings based on project needs, hosting plans, database requirements, team familiarity, and long-term maintainability.',
     tools: ['MERN Stack', 'Firebase Stack', 'T3 Stack', '.NET Stack'],
     skills: ['MERN Stack', 'MEVN Stack', 'LAMP Stack', 'T3 Stack', 'Firebase Stack', '.NET Stack'],
+    expertSkills: ['MERN Stack', 'Firebase Stack', 'React.js', 'TypeScript', 'Tailwind CSS', 'Firebase Auth', 'Firestore', 'Firebase Hosting'],
+    activeSkills: [
+      'MERN Stack', 'Firebase Stack',
+      'React.js', 'Node.js', 'Express.js',
+      'MySQL', 'TypeScript', 'Tailwind CSS',
+      'Firebase Auth', 'Firestore', 'Firebase Hosting',
+      'SQL Server', 'C# ASP.NET',
+    ],
     sections: [
       {
         title: 'MERN Stack',
@@ -572,6 +605,12 @@ const skillPreviewCards: SkillPreviewCard[] = [
       'Helps clients stay organized through inbox support, scheduling, documentation, data entry, task tracking, customer support, content coordination, and online store operations.',
     tools: ['Slack', 'Google Workspace', 'Notion', 'Trello'],
     skills: ['Slack', 'Google Workspace', 'Google Sheets', 'Notion', 'Trello', 'HubSpot', 'Canva', 'ChatGPT'],
+    expertSkills: ['Google Workspace', 'Gmail', 'Google Docs', 'Google Sheets', 'Google Drive', 'Google Calendar', 'Notion', 'Trello', 'ChatGPT', 'Canva'],
+    activeSkills: [
+      'Slack', 'Google Workspace', 'Gmail', 'Google Docs', 'Google Sheets', 'Google Drive', 'Google Calendar',
+      'Microsoft 365', 'Word', 'Excel', 'Microsoft Excel', 'PowerPoint', 'Outlook', 'OneDrive',
+      'Notion', 'Trello', 'ClickUp', 'ChatGPT', 'Grammarly', 'Canva', 'Canva AI',
+    ],
     sections: [
       {
         title: 'Communication Tools',
@@ -633,8 +672,206 @@ function getToolIcon(name: string) {
   return toolIcons[name] ?? { name, icon: FiTool, color: '#00f2ea', label: 'Skill' }
 }
 
+function isActive(skill: string, activeSkills?: string[]): boolean {
+  return !activeSkills || activeSkills.includes(skill)
+}
+
+function getSkillTier(skill: string, expertSkills?: string[], activeSkills?: string[]): 'expert' | 'proficient' | 'familiar' {
+  if (!activeSkills) return 'proficient'
+  if (expertSkills?.includes(skill)) return 'expert'
+  if (activeSkills.includes(skill)) return 'proficient'
+  return 'familiar'
+}
+
+function SkillChip({
+  skill,
+  activeSkills,
+  expertSkills,
+  showTier,
+}: {
+  skill: string
+  activeSkills?: string[]
+  expertSkills?: string[]
+  showTier?: boolean
+}) {
+  const tool = getToolIcon(skill)
+  const Icon = tool.icon
+  const active = isActive(skill, activeSkills)
+  const tier = showTier ? getSkillTier(skill, expertSkills, activeSkills) : null
+
+  return (
+    <span className="skill-chip inline-flex items-center gap-2 px-3 py-1 text-[10px] font-bold">
+      <span
+        className="h-1.5 w-1.5 shrink-0 rounded-full"
+        style={{ background: active ? '#00f2ea' : '#4a6a66' }}
+      />
+      <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
+      {skill}
+      {tier === 'expert' && (
+        <span className="rounded bg-[#00f2ea]/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-[#00f2ea]">
+          exp
+        </span>
+      )}
+      {tier === 'proficient' && (
+        <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-blue-300">
+          pro
+        </span>
+      )}
+    </span>
+  )
+}
+
+const TYPE_CONFIG: Record<string, { icon: IconType; accent: string; bg: string }> = {
+  'AI-assisted work':    { icon: SiAnthropic,  accent: '#f59e0b', bg: 'rgba(245,158,11,0.07)' },
+  'Support operations':  { icon: FiTool,       accent: '#3b82f6', bg: 'rgba(59,130,246,0.07)' },
+  'Creative production': { icon: FiPrinter,    accent: '#ec4899', bg: 'rgba(236,72,153,0.07)' },
+  'Web app stack':       { icon: FiGlobe,      accent: '#00f2ea', bg: 'rgba(0,242,234,0.07)'  },
+  'Mobile app stack':    { icon: FiSmartphone, accent: '#22c55e', bg: 'rgba(34,197,94,0.07)'  },
+  'Desktop app stack':   { icon: FiMonitor,    accent: '#a855f7', bg: 'rgba(168,85,247,0.07)' },
+  'Stack combinations':  { icon: FiDatabase,   accent: '#14b8a6', bg: 'rgba(20,184,166,0.07)' },
+  'VA operations stack': { icon: FiActivity,   accent: '#eab308', bg: 'rgba(234,179,8,0.07)'  },
+  'Core skill stack':    { icon: FiCpu,        accent: '#00f2ea', bg: 'rgba(0,242,234,0.07)'  },
+}
+
+const INITIAL_CARD_COUNT = 4
+
+function StackDrawer({ card, onClose }: { card: SkillPreviewCard; onClose: () => void }) {
+  const cfg = TYPE_CONFIG[card.type] ?? TYPE_CONFIG['Core skill stack']
+  const CategoryIcon = cfg.icon
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [onClose])
+
+  return (
+    <>
+      <div
+        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <aside
+        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l border-white/10 bg-[#070f1c] shadow-2xl"
+        style={{ animation: 'slide-in-right 0.25s ease' }}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${card.title} full stack`}
+      >
+        {/* sticky header */}
+        <div className="shrink-0 border-b border-white/10 p-5">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border"
+                style={{ background: cfg.bg, borderColor: `${cfg.accent}30`, color: cfg.accent }}
+              >
+                <CategoryIcon className="h-5 w-5" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: cfg.accent }}>
+                  {card.type}
+                </p>
+                <h3 className="font-heading text-lg font-bold leading-tight text-[#d4e4fa]">
+                  {card.title}
+                </h3>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 text-[#849492] transition hover:border-white/30 hover:text-[#d4e4fa]"
+              aria-label="Close"
+            >
+              <FiX className="h-4 w-4" />
+            </button>
+          </div>
+          <p className="mt-3 rounded-lg border border-white/10 bg-white/3 p-3 text-[11px] italic leading-5 text-[#849492]">
+            {card.impact}
+          </p>
+          {/* mini legend */}
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 font-mono-label text-[10px] text-[#4a6a66]">
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
+              <span className="rounded bg-[#00f2ea]/15 px-1 text-[8px] font-bold text-[#00f2ea]">EXP</span>
+              Expert
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
+              <span className="rounded bg-blue-500/15 px-1 text-[8px] font-bold text-blue-300">PRO</span>
+              Proficient
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4a6a66]" />
+              Familiar — Can Adapt
+            </span>
+          </div>
+        </div>
+
+        {/* scrollable sections */}
+        <div className="flex-1 overflow-y-auto p-5">
+          <div className="grid gap-6">
+            {card.sections ? (
+              card.sections.map((section) => {
+                const used = card.activeSkills
+                  ? section.skills.filter((s) => card.activeSkills!.includes(s))
+                  : section.skills
+                const familiar = card.activeSkills
+                  ? section.skills.filter((s) => !card.activeSkills!.includes(s))
+                  : []
+
+                return (
+                  <div key={section.title}>
+                    <p className="mb-3 font-mono-label text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: cfg.accent }}>
+                      {section.title}
+                    </p>
+                    {used.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {used.map((skill) => (
+                          <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} showTier />
+                        ))}
+                      </div>
+                    )}
+                    {familiar.length > 0 && (
+                      <div className="mt-3 rounded-xl border border-dashed border-[#4a6a66]/35 bg-white/[0.02] p-3">
+                        <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a6a66]">
+                          Familiar — Can Adapt
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {familiar.map((skill) => (
+                            <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              })
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {card.skills.map((skill) => (
+                  <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} showTier />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </aside>
+    </>
+  )
+}
+
 function Skills({ skillGroups }: SkillsProps) {
-  const [expandedCardTitle, setExpandedCardTitle] = useState<string | null>(null)
+  const [stackPanelCard, setStackPanelCard] = useState<SkillPreviewCard | null>(null)
+  const [showAll, setShowAll] = useState(false)
+
   const groupCards: SkillPreviewCard[] = skillGroups.map((group) => ({
     title: group.title,
     type: 'Core skill stack',
@@ -645,7 +882,9 @@ function Skills({ skillGroups }: SkillsProps) {
     sections: [{ title: 'Current stack', skills: group.skills }],
   }))
 
-  const cards = [...groupCards, ...skillPreviewCards]
+  const allCards = [...groupCards, ...skillPreviewCards]
+  const cards = showAll ? allCards : allCards.slice(0, INITIAL_CARD_COUNT)
+  const hiddenCount = allCards.length - INITIAL_CARD_COUNT
 
   return (
     <section id="skills" className="border-y border-white/10 bg-white/3 px-5 py-16 md:py-28 lg:px-8">
@@ -655,126 +894,154 @@ function Skills({ skillGroups }: SkillsProps) {
           title="Practical skills connected to real tools and work environments."
           description="A client-ready view of AI agents, web systems, medical records workflows, IoT, support operations, software applications, websites, desktop apps, and creative production tools."
         />
-        <div className="grid gap-6 lg:grid-cols-2">
+
+        {/* Legend */}
+        <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-white/10 bg-[#010f1f]/60 p-4">
+          <p className="font-mono-label text-[10px] font-bold uppercase tracking-widest text-[#4a6a66]">
+            Confidence:
+          </p>
+          <span className="flex items-center gap-2 text-[11px] text-[#849492]">
+            <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
+              React.js
+              <span className="rounded bg-[#00f2ea]/15 px-1 py-px font-mono-label text-[8px] font-bold text-[#00f2ea]">EXP</span>
+            </span>
+            = Expert — deep hands-on in real projects
+          </span>
+          <span className="flex items-center gap-2 text-[11px] text-[#849492]">
+            <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
+              Node.js
+              <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold text-blue-300">PRO</span>
+            </span>
+            = Proficient — used in real work
+          </span>
+          <span className="flex items-center gap-2 text-[11px] text-[#849492]">
+            <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold opacity-60">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4a6a66]" />
+              Vue.js
+            </span>
+            = Familiar — can adapt quickly
+          </span>
+        </div>
+
+        {/* Card Grid */}
+        <div className="grid gap-5 lg:grid-cols-2">
           {cards.map((card, index) => {
-            const isExpanded = expandedCardTitle === card.title
-            const visibleSkills = card.skills.slice(0, 8)
-            const hiddenSkillCount = Math.max(card.skills.length - visibleSkills.length, 0)
-            const fullStackCount =
-              card.sections?.reduce((total, section) => total + section.skills.length, 0) ??
-              card.skills.length
-            const canExpand = Boolean(card.sections?.length) || hiddenSkillCount > 0
+            const cfg = TYPE_CONFIG[card.type] ?? TYPE_CONFIG['Core skill stack']
+            const CategoryIcon = cfg.icon
+            const totalCount = card.sections?.reduce((t, s) => t + s.skills.length, 0) ?? card.skills.length
+            const previewSkills = card.skills.slice(0, 6)
 
             return (
-              <article key={card.title} className="glass-card card-hover overflow-hidden p-0">
-                <div className="relative border-b border-white/10 bg-[#010f1f] p-5">
-                  <span className="absolute left-4 top-4 rounded-full border border-[#00f2ea]/30 bg-[#051424]/90 px-3 py-1 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#00f2ea] backdrop-blur">
-                    Skills Preview
-                  </span>
-                  <div className="mt-12 grid gap-3 sm:grid-cols-2">
-                    {card.tools.map((toolName) => {
-                      const tool = getToolIcon(toolName)
-                      const Icon = tool.icon
-
-                      return (
-                        <div
-                          key={toolName}
-                          className="flex items-center gap-3 rounded-lg border border-white/10 bg-[#122131]/80 p-3"
-                        >
-                          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-[#00f2ea]/20 bg-[#00f2ea]/10">
-                            <Icon className="h-5 w-5" style={{ color: tool.color }} aria-hidden="true" />
-                          </span>
-                          <span>
-                            <span className="block font-heading text-sm font-bold text-[#d4e4fa]">
-                              {tool.name}
-                            </span>
-                            <span className="text-xs text-[#849492]">{tool.label}</span>
-                          </span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-                <div className="p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#00f2ea]">
-                      {card.type}
-                    </p>
-                    <p className="font-mono-label text-[10px] text-[#849492]/70">
-                      #{String(index + 1).padStart(3, '0')}
-                    </p>
-                  </div>
-                  <h3 className="mt-3 font-heading text-2xl font-bold leading-tight text-[#d4e4fa]">
-                    {card.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-[#b9cac8]">{card.description}</p>
-                  <p className="shine-panel mt-3 rounded-lg border border-white/10 bg-[#010f1f]/70 p-3 text-sm italic leading-6 text-[#cffffb]">
-                    {card.impact}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {visibleSkills.map((skill) => {
-                      const tool = getToolIcon(skill)
-                      const Icon = tool.icon
-
-                      return (
-                        <span
-                          key={skill}
-                          className="skill-chip inline-flex items-center gap-2 px-3 py-1 text-[10px] font-bold"
-                        >
-                          <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
-                          {skill}
-                        </span>
-                      )
-                    })}
-                    {hiddenSkillCount > 0 ? (
-                      <span className="skill-chip px-3 py-1 text-[10px] font-bold text-[#00f2ea]">
-                        +{hiddenSkillCount} more
-                      </span>
-                    ) : null}
-                  </div>
-                  {canExpand ? (
-                    <button
-                      type="button"
-                      className="mt-4 rounded-lg border border-[#00f2ea]/30 px-4 py-2 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#00f2ea] transition hover:bg-[#00f2ea] hover:text-[#051424]"
-                      onClick={() => setExpandedCardTitle(isExpanded ? null : card.title)}
-                      aria-expanded={isExpanded}
+              <article
+                key={card.title}
+                className="glass-card card-hover flex flex-col overflow-hidden"
+                style={{ borderLeft: `3px solid ${cfg.accent}40` }}
+              >
+                {/* Header */}
+                <div
+                  className="flex items-start justify-between gap-3 border-b border-white/10 p-5"
+                  style={{ background: cfg.bg }}
+                >
+                  <div className="flex items-center gap-3">
+                    <span
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border"
+                      style={{ background: cfg.bg, borderColor: `${cfg.accent}30`, color: cfg.accent }}
                     >
-                      {isExpanded ? 'Hide full stack' : `View full stack (${fullStackCount})`}
-                    </button>
-                  ) : null}
-                  {isExpanded && card.sections ? (
-                    <div className="mt-4 grid gap-4 rounded-lg border border-white/10 bg-[#010f1f]/55 p-4">
-                      {card.sections.map((section) => (
-                        <div key={section.title}>
-                          <p className="mb-2 font-mono-label text-[10px] font-bold uppercase tracking-[0.16em] text-[#00f2ea]">
-                            {section.title}
-                          </p>
-                          <div className="flex flex-wrap gap-2">
-                            {section.skills.map((skill) => {
-                              const tool = getToolIcon(skill)
-                              const Icon = tool.icon
-
-                              return (
-                                <span
-                                  key={skill}
-                                  className="skill-chip inline-flex items-center gap-2 px-3 py-1 text-[10px] font-bold"
-                                >
-                                  <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
-                                  {skill}
-                                </span>
-                              )
-                            })}
-                          </div>
-                        </div>
-                      ))}
+                      <CategoryIcon className="h-5 w-5" aria-hidden="true" />
+                    </span>
+                    <div>
+                      <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: cfg.accent }}>
+                        {card.type}
+                      </p>
+                      <h3 className="font-heading text-xl font-bold leading-snug text-[#d4e4fa]">
+                        {card.title}
+                      </h3>
                     </div>
-                  ) : null}
+                  </div>
+                  <span className="mt-1 shrink-0 font-mono-label text-[10px] text-[#849492]/40">
+                    #{String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
+
+                {/* Body */}
+                <div className="flex flex-1 flex-col gap-4 p-5">
+                  <p className="text-sm leading-6 text-[#b9cac8]">{card.description}</p>
+
+                  {/* Key tools — compact row */}
+                  <div>
+                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a6a66]">
+                      Key Tools
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {card.tools.map((toolName) => {
+                        const tool = getToolIcon(toolName)
+                        const Icon = tool.icon
+                        return (
+                          <span
+                            key={toolName}
+                            className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-[#d4e4fa]"
+                          >
+                            <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
+                            {tool.name}
+                          </span>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Preview skill chips */}
+                  <div>
+                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a6a66]">
+                      Skill Preview
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {previewSkills.map((skill) => (
+                        <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} />
+                      ))}
+                      {card.skills.length > 6 && (
+                        <span className="skill-chip px-3 py-1 text-[10px] font-bold" style={{ color: cfg.accent }}>
+                          +{card.skills.length - 6} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* View full stack CTA */}
+                  <button
+                    type="button"
+                    className="mt-auto flex w-full items-center justify-between rounded-xl border border-white/10 bg-white/3 px-4 py-3 transition hover:border-white/20 hover:bg-white/5"
+                    onClick={() => setStackPanelCard(card)}
+                  >
+                    <span className="font-mono-label text-[10px] font-bold uppercase tracking-wider" style={{ color: cfg.accent }}>
+                      View Full Stack
+                    </span>
+                    <span className="flex items-center gap-2 font-mono-label text-[10px] text-[#849492]">
+                      {totalCount} tools
+                      <FiArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </button>
                 </div>
               </article>
             )
           })}
         </div>
+
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setShowAll((prev) => !prev)}
+            className="rounded-xl border border-[#00f2ea]/25 px-6 py-3 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#00f2ea] transition hover:bg-[#00f2ea] hover:text-[#051424]"
+          >
+            {showAll ? 'Show less' : `Show all skill categories (+${hiddenCount} more)`}
+          </button>
+        </div>
       </div>
+
+      {stackPanelCard && (
+        <StackDrawer card={stackPanelCard} onClose={() => setStackPanelCard(null)} />
+      )}
     </section>
   )
 }

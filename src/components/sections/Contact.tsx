@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import type { IconType } from 'react-icons'
-import { FiBriefcase, FiCheckCircle, FiMail, FiMapPin, FiPhone } from 'react-icons/fi'
+import { FiBriefcase, FiCheckCircle, FiMail, FiMapPin, FiPhone, FiSend } from 'react-icons/fi'
 import SectionHeading from '../ui/SectionHeading'
 import type { Profile } from '../../data/portfolio'
 
@@ -8,7 +9,18 @@ type ContactProps = {
   profile: Profile
 }
 
+type FormState = {
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
 function Contact({ onOpenCv, profile }: ContactProps) {
+  const [form, setForm] = useState<FormState>({ name: '', email: '', subject: '', message: '' })
+  const [errors, setErrors] = useState<Partial<FormState>>({})
+  const [submitted, setSubmitted] = useState(false)
+
   const contactMethods: Array<{
     label: string
     value: string
@@ -25,6 +37,41 @@ function Contact({ onOpenCv, profile }: ContactProps) {
       icon: FiBriefcase,
     },
   ]
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const { name, value } = e.target
+    setForm((prev) => ({ ...prev, [name]: value }))
+    if (errors[name as keyof FormState]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }))
+    }
+  }
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+
+    const newErrors: Partial<FormState> = {}
+    if (!form.name.trim()) newErrors.name = 'Required'
+    if (!form.email.trim()) newErrors.email = 'Required'
+    if (!form.subject.trim()) newErrors.subject = 'Required'
+    if (!form.message.trim()) newErrors.message = 'Required'
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
+    const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`
+    const mailto = `mailto:${profile.email}?subject=${encodeURIComponent(form.subject)}&body=${encodeURIComponent(body)}`
+    window.open(mailto)
+    setSubmitted(true)
+    setForm({ name: '', email: '', subject: '', message: '' })
+    setErrors({})
+  }
+
+  const inputClass = (field: keyof FormState) =>
+    `w-full rounded-lg border bg-[#051424]/60 px-4 py-2.5 text-sm text-[#d4e4fa] placeholder-[#4a6a66] outline-none transition focus:border-[#00f2ea]/60 focus:ring-1 focus:ring-[#00f2ea]/30 ${
+      errors[field] ? 'border-red-500/60' : 'border-white/10'
+    }`
 
   return (
     <section id="contact" className="px-5 py-16 md:py-28 lg:px-8">
@@ -93,18 +140,85 @@ function Contact({ onOpenCv, profile }: ContactProps) {
                 )}
               </div>
             </div>
-            <div className="rounded-lg bg-[#00f2ea] p-6 text-[#051424]">
-              <h3 className="font-heading text-2xl font-bold">Start a Technical Discussion</h3>
-              <p className="mt-3 text-sm leading-6 text-[#003735]">
-                Looking for IT Support, EMR workflow help, AI-assisted productivity, IoT development,
-                or web systems? Let us talk about your roadmap.
-              </p>
-              <a
-                href={`mailto:${profile.email}`}
-                className="mt-5 inline-flex w-full justify-center rounded-lg bg-[#051424] px-5 py-3 text-sm font-bold text-[#00f2ea]"
-              >
-                Initialize Contact
-              </a>
+
+            <div className="surface-panel p-6">
+              <h3 className="font-heading text-lg font-bold text-[#d4e4fa]">Start a Technical Discussion</h3>
+              {submitted ? (
+                <div className="mt-5 flex flex-col items-center gap-3 py-6 text-center">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#00f2ea]/15 text-[#00f2ea]">
+                    <FiCheckCircle className="h-6 w-6" />
+                  </span>
+                  <p className="font-heading font-semibold text-[#d4e4fa]">Email client opened!</p>
+                  <p className="text-sm text-[#849492]">Your message was prepared. Send it from your email app.</p>
+                  <button
+                    type="button"
+                    className="mt-2 text-xs text-[#00f2ea] underline underline-offset-2"
+                    onClick={() => setSubmitted(false)}
+                  >
+                    Send another message
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} noValidate className="mt-4 grid gap-3">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div>
+                      <input
+                        type="text"
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        placeholder="Your name"
+                        className={inputClass('name')}
+                        aria-label="Your name"
+                      />
+                      {errors.name && <p className="mt-1 text-[10px] text-red-400">{errors.name}</p>}
+                    </div>
+                    <div>
+                      <input
+                        type="email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        placeholder="Your email"
+                        className={inputClass('email')}
+                        aria-label="Your email"
+                      />
+                      {errors.email && <p className="mt-1 text-[10px] text-red-400">{errors.email}</p>}
+                    </div>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      name="subject"
+                      value={form.subject}
+                      onChange={handleChange}
+                      placeholder="Subject (e.g. Job Opportunity, Project Inquiry)"
+                      className={inputClass('subject')}
+                      aria-label="Subject"
+                    />
+                    {errors.subject && <p className="mt-1 text-[10px] text-red-400">{errors.subject}</p>}
+                  </div>
+                  <div>
+                    <textarea
+                      name="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      placeholder="Your message..."
+                      rows={4}
+                      className={`${inputClass('message')} resize-none`}
+                      aria-label="Message"
+                    />
+                    {errors.message && <p className="mt-1 text-[10px] text-red-400">{errors.message}</p>}
+                  </div>
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#00f2ea] px-5 py-3 text-sm font-bold text-[#051424] transition hover:bg-[#7ffff8]"
+                  >
+                    <FiSend className="h-4 w-4" aria-hidden="true" />
+                    Send Message
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

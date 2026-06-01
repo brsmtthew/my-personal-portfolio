@@ -703,17 +703,17 @@ function SkillChip({
     <span className="skill-chip inline-flex items-center gap-2 px-3 py-1 text-[10px] font-bold">
       <span
         className="h-1.5 w-1.5 shrink-0 rounded-full"
-        style={{ background: active ? '#00f2ea' : '#4a6a66' }}
+        style={{ background: active ? '#f59e0b' : '#4a3f35' }}
       />
       <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
       {skill}
       {tier === 'expert' && (
-        <span className="rounded bg-[#00f2ea]/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-[#00f2ea]">
+        <span className="rounded bg-[#f59e0b]/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-[#f59e0b]">
           exp
         </span>
       )}
       {tier === 'proficient' && (
-        <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-blue-300">
+        <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-blue-400">
           pro
         </span>
       )}
@@ -754,19 +754,19 @@ function StackDrawer({ card, onClose }: { card: SkillPreviewCard; onClose: () =>
   return (
     <>
       <div
-        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-50 bg-[#0d0c0b]/70 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
       <aside
-        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l border-white/10 bg-[#070f1c] shadow-2xl"
+        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l border-white/8 bg-[#111010] shadow-2xl"
         style={{ animation: 'slide-in-right 0.25s ease' }}
         role="dialog"
         aria-modal="true"
         aria-label={`${card.title} full stack`}
       >
         {/* sticky header */}
-        <div className="shrink-0 border-b border-white/10 p-5">
+        <div className="shrink-0 border-b border-white/8 p-5">
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
               <span
@@ -779,7 +779,7 @@ function StackDrawer({ card, onClose }: { card: SkillPreviewCard; onClose: () =>
                 <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: cfg.accent }}>
                   {card.type}
                 </p>
-                <h3 className="font-heading text-lg font-bold leading-tight text-[#d4e4fa]">
+                <h3 className="font-heading text-lg font-bold leading-tight text-[#f5f0e8]">
                   {card.title}
                 </h3>
               </div>
@@ -787,29 +787,29 @@ function StackDrawer({ card, onClose }: { card: SkillPreviewCard; onClose: () =>
             <button
               type="button"
               onClick={onClose}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 text-[#849492] transition hover:border-white/30 hover:text-[#d4e4fa]"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/8 text-[#7a6e62] transition hover:border-white/20 hover:text-[#f5f0e8]"
               aria-label="Close"
             >
               <FiX className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-3 rounded-lg border border-white/10 bg-white/3 p-3 text-[11px] italic leading-5 text-[#849492]">
+          <p className="mt-3 rounded-lg border border-white/7 bg-white/3 p-3 text-[11px] italic leading-5 text-[#7a6e62]">
             {card.impact}
           </p>
           {/* mini legend */}
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 font-mono-label text-[10px] text-[#4a6a66]">
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 font-mono-label text-[10px] text-[#7a6e62]">
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
-              <span className="rounded bg-[#00f2ea]/15 px-1 text-[8px] font-bold text-[#00f2ea]">EXP</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
+              <span className="rounded bg-[#f59e0b]/15 px-1 text-[8px] font-bold text-[#f59e0b]">EXP</span>
               Expert
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
-              <span className="rounded bg-blue-500/15 px-1 text-[8px] font-bold text-blue-300">PRO</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
+              <span className="rounded bg-blue-500/15 px-1 text-[8px] font-bold text-blue-400">PRO</span>
               Proficient
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4a6a66]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4a3f35]" />
               Familiar — Can Adapt
             </span>
           </div>
@@ -840,8 +840,8 @@ function StackDrawer({ card, onClose }: { card: SkillPreviewCard; onClose: () =>
                       </div>
                     )}
                     {familiar.length > 0 && (
-                      <div className="mt-3 rounded-xl border border-dashed border-[#4a6a66]/35 bg-white/[0.02] p-3">
-                        <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a6a66]">
+                      <div className="mt-3 rounded-xl border border-dashed border-white/10 bg-white/2 p-3">
+                        <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#7a6e62]">
                           Familiar — Can Adapt
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -887,7 +887,7 @@ function Skills({ skillGroups }: SkillsProps) {
   const hiddenCount = allCards.length - INITIAL_CARD_COUNT
 
   return (
-    <section id="skills" className="border-y border-white/10 bg-white/3 px-5 py-16 md:py-28 lg:px-8">
+    <section id="skills" className="border-y border-white/6 bg-[#0d0c0b] px-5 py-16 md:py-28 lg:px-8">
       <div className="mx-auto max-w-300">
         <SectionHeading
           eyebrow="Skills Preview"
@@ -896,29 +896,29 @@ function Skills({ skillGroups }: SkillsProps) {
         />
 
         {/* Legend */}
-        <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-white/10 bg-[#010f1f]/60 p-4">
-          <p className="font-mono-label text-[10px] font-bold uppercase tracking-widest text-[#4a6a66]">
+        <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-white/7 bg-[#1c1a18] p-4">
+          <p className="font-mono-label text-[10px] font-bold uppercase tracking-widest text-[#7a6e62]">
             Confidence:
           </p>
-          <span className="flex items-center gap-2 text-[11px] text-[#849492]">
+          <span className="flex items-center gap-2 text-[11px] text-[#c4b5a0]">
             <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
               React.js
-              <span className="rounded bg-[#00f2ea]/15 px-1 py-px font-mono-label text-[8px] font-bold text-[#00f2ea]">EXP</span>
+              <span className="rounded bg-[#f59e0b]/15 px-1 py-px font-mono-label text-[8px] font-bold text-[#f59e0b]">EXP</span>
             </span>
             = Expert — deep hands-on in real projects
           </span>
-          <span className="flex items-center gap-2 text-[11px] text-[#849492]">
+          <span className="flex items-center gap-2 text-[11px] text-[#c4b5a0]">
             <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00f2ea]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
               Node.js
-              <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold text-blue-300">PRO</span>
+              <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold text-blue-400">PRO</span>
             </span>
             = Proficient — used in real work
           </span>
-          <span className="flex items-center gap-2 text-[11px] text-[#849492]">
+          <span className="flex items-center gap-2 text-[11px] text-[#c4b5a0]">
             <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold opacity-60">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4a6a66]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#4a3f35]" />
               Vue.js
             </span>
             = Familiar — can adapt quickly
@@ -955,23 +955,23 @@ function Skills({ skillGroups }: SkillsProps) {
                       <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: cfg.accent }}>
                         {card.type}
                       </p>
-                      <h3 className="font-heading text-xl font-bold leading-snug text-[#d4e4fa]">
+                      <h3 className="font-heading text-xl font-bold leading-snug text-[#f5f0e8]">
                         {card.title}
                       </h3>
                     </div>
                   </div>
-                  <span className="mt-1 shrink-0 font-mono-label text-[10px] text-[#849492]/40">
+                  <span className="mt-1 shrink-0 font-mono-label text-[10px] text-[#7a6e62]/50">
                     #{String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
 
                 {/* Body */}
                 <div className="flex flex-1 flex-col gap-4 p-5">
-                  <p className="text-sm leading-6 text-[#b9cac8]">{card.description}</p>
+                  <p className="text-sm leading-6 text-[#7a6e62]">{card.description}</p>
 
                   {/* Key tools — compact row */}
                   <div>
-                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a6a66]">
+                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a3f35]">
                       Key Tools
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -981,7 +981,7 @@ function Skills({ skillGroups }: SkillsProps) {
                         return (
                           <span
                             key={toolName}
-                            className="flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-[11px] text-[#d4e4fa]"
+                            className="flex items-center gap-1.5 rounded-lg border border-white/7 bg-white/5 px-2.5 py-1.5 text-[11px] text-[#c4b5a0]"
                           >
                             <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
                             {tool.name}
@@ -993,7 +993,7 @@ function Skills({ skillGroups }: SkillsProps) {
 
                   {/* Preview skill chips */}
                   <div>
-                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a6a66]">
+                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a3f35]">
                       Skill Preview
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -1011,13 +1011,13 @@ function Skills({ skillGroups }: SkillsProps) {
                   {/* View full stack CTA */}
                   <button
                     type="button"
-                    className="mt-auto flex w-full items-center justify-between rounded-xl border border-white/10 bg-white/3 px-4 py-3 transition hover:border-white/20 hover:bg-white/5"
+                    className="mt-auto flex w-full items-center justify-between rounded-xl border border-white/7 bg-white/3 px-4 py-3 transition hover:border-white/12 hover:bg-white/5"
                     onClick={() => setStackPanelCard(card)}
                   >
                     <span className="font-mono-label text-[10px] font-bold uppercase tracking-wider" style={{ color: cfg.accent }}>
                       View Full Stack
                     </span>
-                    <span className="flex items-center gap-2 font-mono-label text-[10px] text-[#849492]">
+                    <span className="flex items-center gap-2 font-mono-label text-[10px] text-[#7a6e62]">
                       {totalCount} tools
                       <FiArrowRight className="h-3.5 w-3.5" />
                     </span>
@@ -1032,7 +1032,7 @@ function Skills({ skillGroups }: SkillsProps) {
           <button
             type="button"
             onClick={() => setShowAll((prev) => !prev)}
-            className="rounded-xl border border-[#00f2ea]/25 px-6 py-3 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#00f2ea] transition hover:bg-[#00f2ea] hover:text-[#051424]"
+            className="rounded-xl border border-[#f59e0b]/25 px-6 py-3 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#f59e0b] transition hover:bg-[#f59e0b] hover:text-[#111010]"
           >
             {showAll ? 'Show less' : `Show all skill categories (+${hiddenCount} more)`}
           </button>

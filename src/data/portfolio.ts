@@ -96,10 +96,10 @@ export const portfolio: PortfolioData = {
     location: 'Purok Cafe, Visayan Village, Tagum City',
     email: 'borisdairo123@gmail.com',
     phone: '09382180531',
-    availability: 'Open to remote, freelance, and full-time technical roles',
-    headline: 'Client-ready IT support, medical systems, AI workflow, and IoT development.',
+    availability: 'Available Now — Remote, Freelance & Full-time',
+    headline: 'I ship systems teams depend on — hospital records, live IoT, and AI-powered workflows.',
     summary:
-      'BSIT graduate with hands-on experience in AI Agents, Electronic Medical Records, Medical Coding Workflows, IoT Development, Web Systems, Database Management, Networking, and Technical Support. I help teams build organized systems, keep records accurate, and use practical technology to work faster with fewer errors.',
+      'IT professional with production-proven experience building systems that real organizations rely on. From a hospital-grade Medical Records Management System to an ESP32 IoT monitoring platform, I take projects from zero to deployed. I close skill gaps fast using AI workflows, and I bring precision to every system I touch.',
     focusAreas: [
       'AI WORKFLOWS',
       'ELECTRONIC MEDICAL RECORDS',
@@ -117,25 +117,25 @@ export const portfolio: PortfolioData = {
     ],
   },
   stats: [
-    { value: 'BSIT', label: 'Information Technology Graduate' },
-    { value: 'AI + IoT', label: 'Workflow Automation and Connected Systems' },
-    { value: 'EMR', label: 'Medical Records and Coding Workflows' },
+    { value: '2 Live', label: 'Production Systems Deployed' },
+    { value: 'BSIT', label: 'Information Technology — Class of 2025' },
+    { value: 'Remote', label: 'Available Now — All Timezones' },
   ],
   highlights: [
     {
       title: 'AI-Assisted Workflows',
       description:
-        'Uses AI Agents to support research, documentation, task planning, content drafting, and technical troubleshooting.',
+        'Integrates AI agents into real work — automating documentation, accelerating research, and solving technical problems faster. Not just a user; an actual workflow builder.',
     },
     {
-      title: 'Medical Systems Experience',
+      title: 'Production Medical Systems',
       description:
-        'Experienced with Electronic Medical Records, Medical Coding Workflows, patient data organization, and privacy-aware handling.',
+        'Built and deployed a hospital-grade Medical Records Management System currently in active use — handling patient data, chart workflows, coding processes, and role-based access at scale.',
     },
     {
-      title: 'IoT and Technical Support',
+      title: 'IoT & Full-Stack Delivery',
       description:
-        'Builds practical solutions across software, hardware, ESP32-based IoT, networking, and day-to-day Technical Support.',
+        'Shipped an ESP32 IoT monitoring platform with a live React dashboard connected to Firebase. End-to-end: hardware, backend, UI, and deployment — all in production.',
     },
   ],
   skillGroups: [

@@ -158,20 +158,20 @@ function App() {
   }, [isCvModalOpen])
 
   return (
-    <div className="mobile-safe-bottom relative min-h-screen overflow-x-hidden bg-[#051424] text-[#d4e4fa]">
+    <div className="mobile-safe-bottom relative min-h-screen overflow-x-hidden bg-[#111010] text-[#f5f0e8]">
       {loadingMounted && (
         <div
-          className={`fixed inset-0 z-200 flex flex-col items-center justify-center bg-[#051424] transition-opacity duration-500 ${isLoaded ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+          className={`fixed inset-0 z-200 flex flex-col items-center justify-center bg-[#111010] transition-opacity duration-500 ${isLoaded ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
           aria-hidden={isLoaded}
         >
-          <p className="font-heading text-5xl font-bold tracking-widest text-[#00f2ea]">BMD</p>
-          <div className="relative mt-5 h-px w-28 overflow-hidden rounded-full bg-white/10">
+          <p className="font-heading text-5xl font-bold tracking-widest text-[#f59e0b]">BMD</p>
+          <div className="relative mt-5 h-px w-28 overflow-hidden rounded-full bg-white/8">
             <div
-              className="absolute inset-y-0 left-0 w-full bg-[#00f2ea] shadow-[0_0_8px_rgba(0,242,234,0.8)]"
+              className="absolute inset-y-0 left-0 w-full bg-[#f59e0b] shadow-[0_0_8px_rgba(245,158,11,0.6)]"
               style={{ animation: 'load-bar 0.9s ease-out forwards', transformOrigin: 'left' }}
             />
           </div>
-          <p className="mt-4 font-mono-label text-[10px] uppercase tracking-[0.2em] text-[#849492]">
+          <p className="mt-4 font-mono-label text-[10px] uppercase tracking-[0.2em] text-[#7a6e62]">
             Loading portfolio
           </p>
         </div>
@@ -179,11 +179,11 @@ function App() {
 
       <div
         ref={progressBarRef}
-        className="fixed left-0 top-0 z-99 h-0.5 bg-[#00f2ea] shadow-[0_0_8px_rgba(0,242,234,0.55)]"
+        className="fixed left-0 top-0 z-99 h-0.5 bg-[#f59e0b] shadow-[0_0_8px_rgba(245,158,11,0.5)]"
         style={{ width: '0%' }}
       />
 
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(0,242,234,0.12),transparent_32%),radial-gradient(circle_at_80%_20%,rgba(59,130,246,0.1),transparent_28%),linear-gradient(180deg,#051424_0%,#010f1f_48%,#051424_100%)]" />
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(245,158,11,0.07),transparent_60%)]" />
       <Header
         activeSection={activeSection}
         name={portfolio.profile.name}
@@ -212,7 +212,7 @@ function App() {
         ref={backToTopRef}
         type="button"
         onClick={() => scrollToSection('#home')}
-        className="fixed bottom-24 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-[#00f2ea]/40 bg-[#051424]/90 text-[#00f2ea] shadow-lg backdrop-blur transition-[opacity,transform] duration-300 hover:border-[#00f2ea] hover:bg-[#00f2ea]/10 hover:-translate-y-0.5 md:bottom-8 md:right-8"
+        className="fixed bottom-24 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-[#f59e0b]/35 bg-[#111010]/90 text-[#f59e0b] shadow-lg backdrop-blur transition-[opacity,transform] duration-300 hover:border-[#f59e0b] hover:bg-[#f59e0b]/12 hover:-translate-y-0.5 md:bottom-8 md:right-8"
         style={{ opacity: 0, pointerEvents: 'none' }}
         aria-label="Back to top"
       >

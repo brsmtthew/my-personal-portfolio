@@ -46,7 +46,7 @@ function Contact({ onOpenCv, profile }: ContactProps) {
     }
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
     const newErrors: Partial<FormState> = {}
@@ -69,34 +69,33 @@ function Contact({ onOpenCv, profile }: ContactProps) {
   }
 
   const inputClass = (field: keyof FormState) =>
-    `w-full rounded-lg border bg-[#051424]/60 px-4 py-2.5 text-sm text-[#d4e4fa] placeholder-[#4a6a66] outline-none transition focus:border-[#00f2ea]/60 focus:ring-1 focus:ring-[#00f2ea]/30 ${
-      errors[field] ? 'border-red-500/60' : 'border-white/10'
+    `w-full rounded-lg border bg-[#1c1a18] px-4 py-2.5 text-sm text-[#f5f0e8] placeholder-[#4a3f35] outline-none transition focus:border-[#f59e0b]/50 focus:ring-1 focus:ring-[#f59e0b]/20 ${
+      errors[field] ? 'border-red-500/60' : 'border-white/8'
     }`
 
   return (
-    <section id="contact" className="px-5 py-16 md:py-28 lg:px-8">
-      <div className="glass-card mx-auto max-w-300 p-6 text-white sm:p-10">
+    <section id="contact" className="bg-[#0d0c0b] px-5 py-16 md:py-28 lg:px-8">
+      <div className="glass-card mx-auto max-w-300 p-6 sm:p-10">
         <SectionHeading
           eyebrow="Contact"
           title="Ready for online job opportunities and client projects."
           description="Reach out for IT Support, EMR workflows, AI-assisted productivity, IoT development, web systems, or technical operations work."
-          tone="dark"
         />
         <div className="grid gap-6 md:grid-cols-[1fr_1.1fr]">
           <div className="surface-panel p-6">
-            <h3 className="font-heading text-xl font-bold text-[#d4e4fa]">Let us connect</h3>
-            <div className="mt-5 space-y-5 text-sm text-[#b9cac8]">
+            <h3 className="font-heading text-xl font-bold text-[#f5f0e8]">Let us connect</h3>
+            <div className="mt-5 space-y-5 text-sm text-[#c4b5a0]">
               {contactMethods.map((method) => {
                 const Icon = method.icon
-                const valueClassName = 'font-bold text-[#d4e4fa] hover:text-[#00f2ea]'
+                const valueClassName = 'font-bold text-[#f5f0e8] hover:text-[#f59e0b]'
 
                 return (
                   <p key={method.label} className="group flex gap-4">
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#00f2ea]/10 text-[#00f2ea] transition group-hover:bg-[#00f2ea]/20 group-hover:shadow-[0_0_18px_rgba(0,242,234,0.18)]">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#f59e0b]/12 text-[#f59e0b] transition group-hover:bg-[#f59e0b]/20">
                       <Icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span>
-                      <span className="block font-mono-label text-[10px] uppercase tracking-[0.14em] text-[#849492]">
+                      <span className="block font-mono-label text-[10px] uppercase tracking-[0.14em] text-[#7a6e62]">
                         {method.label}
                       </span>
                       {method.href ? (
@@ -104,7 +103,7 @@ function Contact({ onOpenCv, profile }: ContactProps) {
                           {method.value}
                         </a>
                       ) : (
-                        <span className="font-bold text-[#d4e4fa]">{method.value}</span>
+                        <span className="font-bold text-[#f5f0e8]">{method.value}</span>
                       )}
                     </span>
                   </p>
@@ -113,8 +112,8 @@ function Contact({ onOpenCv, profile }: ContactProps) {
             </div>
           </div>
           <div className="grid gap-4">
-            <div className="surface-panel p-6 text-white">
-              <p className="font-mono-label text-sm font-semibold uppercase tracking-[0.2em] text-[#00f2ea]">
+            <div className="surface-panel p-6">
+              <p className="font-mono-label text-sm font-semibold uppercase tracking-[0.2em] text-[#f59e0b]">
                 Profiles
               </p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -123,7 +122,7 @@ function Contact({ onOpenCv, profile }: ContactProps) {
                     <button
                       key={social.label}
                       type="button"
-                      className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-left text-sm font-bold hover:border-[#00f2ea]/50 hover:bg-white/10 hover:text-[#00f2ea]"
+                      className="rounded-lg border border-white/8 bg-white/5 px-4 py-3 text-left text-sm font-bold text-[#c4b5a0] hover:border-[#f59e0b]/40 hover:bg-[#f59e0b]/8 hover:text-[#f59e0b]"
                       onClick={onOpenCv}
                     >
                       {social.label}
@@ -132,7 +131,7 @@ function Contact({ onOpenCv, profile }: ContactProps) {
                     <a
                       key={social.label}
                       href={social.href}
-                      className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm font-bold hover:border-[#00f2ea]/50 hover:bg-white/10 hover:text-[#00f2ea]"
+                      className="rounded-lg border border-white/8 bg-white/5 px-4 py-3 text-sm font-bold text-[#c4b5a0] hover:border-[#f59e0b]/40 hover:bg-[#f59e0b]/8 hover:text-[#f59e0b]"
                     >
                       {social.label}
                     </a>
@@ -142,17 +141,17 @@ function Contact({ onOpenCv, profile }: ContactProps) {
             </div>
 
             <div className="surface-panel p-6">
-              <h3 className="font-heading text-lg font-bold text-[#d4e4fa]">Start a Technical Discussion</h3>
+              <h3 className="font-heading text-lg font-bold text-[#f5f0e8]">Start a Technical Discussion</h3>
               {submitted ? (
                 <div className="mt-5 flex flex-col items-center gap-3 py-6 text-center">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#00f2ea]/15 text-[#00f2ea]">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#f59e0b]/15 text-[#f59e0b]">
                     <FiCheckCircle className="h-6 w-6" />
                   </span>
-                  <p className="font-heading font-semibold text-[#d4e4fa]">Email client opened!</p>
-                  <p className="text-sm text-[#849492]">Your message was prepared. Send it from your email app.</p>
+                  <p className="font-heading font-semibold text-[#f5f0e8]">Email client opened!</p>
+                  <p className="text-sm text-[#7a6e62]">Your message was prepared. Send it from your email app.</p>
                   <button
                     type="button"
-                    className="mt-2 text-xs text-[#00f2ea] underline underline-offset-2"
+                    className="mt-2 text-xs text-[#f59e0b] underline underline-offset-2"
                     onClick={() => setSubmitted(false)}
                   >
                     Send another message
@@ -212,7 +211,7 @@ function Contact({ onOpenCv, profile }: ContactProps) {
                   </div>
                   <button
                     type="submit"
-                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#00f2ea] px-5 py-3 text-sm font-bold text-[#051424] transition hover:bg-[#7ffff8]"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-5 py-3 text-sm font-bold text-[#111010] transition hover:bg-[#fbbf24]"
                   >
                     <FiSend className="h-4 w-4" aria-hidden="true" />
                     Send Message

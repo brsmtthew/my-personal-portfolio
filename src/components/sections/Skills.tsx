@@ -725,12 +725,12 @@ const TYPE_CONFIG: Record<string, { icon: IconType; accent: string; bg: string }
   'AI-assisted work':    { icon: SiAnthropic,  accent: '#f59e0b', bg: 'rgba(245,158,11,0.07)' },
   'Support operations':  { icon: FiTool,       accent: '#3b82f6', bg: 'rgba(59,130,246,0.07)' },
   'Creative production': { icon: FiPrinter,    accent: '#ec4899', bg: 'rgba(236,72,153,0.07)' },
-  'Web app stack':       { icon: FiGlobe,      accent: '#00f2ea', bg: 'rgba(0,242,234,0.07)'  },
+  'Web app stack':       { icon: FiGlobe,      accent: '#38bdf8', bg: 'rgba(56,189,248,0.07)'  },
   'Mobile app stack':    { icon: FiSmartphone, accent: '#22c55e', bg: 'rgba(34,197,94,0.07)'  },
   'Desktop app stack':   { icon: FiMonitor,    accent: '#a855f7', bg: 'rgba(168,85,247,0.07)' },
   'Stack combinations':  { icon: FiDatabase,   accent: '#14b8a6', bg: 'rgba(20,184,166,0.07)' },
   'VA operations stack': { icon: FiActivity,   accent: '#eab308', bg: 'rgba(234,179,8,0.07)'  },
-  'Core skill stack':    { icon: FiCpu,        accent: '#00f2ea', bg: 'rgba(0,242,234,0.07)'  },
+  'Core skill stack':    { icon: FiCpu,        accent: '#f59e0b', bg: 'rgba(245,158,11,0.07)' },
 }
 
 const INITIAL_CARD_COUNT = 4

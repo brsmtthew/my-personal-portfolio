@@ -99,7 +99,7 @@ export const portfolio: PortfolioData = {
     availability: 'Available Now — Remote, Freelance & Full-time',
     headline: 'I ship systems teams depend on — hospital records, live IoT, and AI-powered workflows.',
     summary:
-      'IT professional with production-proven experience building systems that real organizations rely on. From a hospital-grade Medical Records Management System to an ESP32 IoT monitoring platform, I take projects from zero to deployed. I close skill gaps fast using AI workflows, and I bring precision to every system I touch.',
+      'IT professional and BSIT graduate with hands-on experience taking real projects from zero to deployed. I built and actively maintain a hospital-grade Medical Records Management System used daily by clinical staff — covering patient chart workflows, medical coding, document management, and role-based access control. I also designed and shipped a full ESP32 IoT monitoring platform with live Firebase telemetry, a real-time React dashboard, and sensor alert management from hardware to production. I integrate AI agents throughout my development process to accelerate research, close skill gaps quickly, and maintain consistent output quality. Precise, dependable, and focused on building systems that hold up in real operational environments. Open to remote, freelance, and full-time roles where technical depth and reliability matter.',
     focusAreas: [
       'AI WORKFLOWS',
       'ELECTRONIC MEDICAL RECORDS',
@@ -280,9 +280,11 @@ export const portfolio: PortfolioData = {
       company: 'TGMCI (Electronic Medical Records)',
       period: '2025 - Present',
       details: [
-        'Developed and maintained a Medical Records Management System to improve workflow efficiency and digital record organization.',
-        'Provided technical support and troubleshooting for computer systems and office network connectivity within the organization.',
-        'Implemented data privacy practices to help protect patient information and support responsible records handling.',
+        'Built and deployed a full Medical Records Management System covering patient registration, chart requests, chart circulation, scanned document viewing, medical coding, laboratory results, civil document management, and role-based user access — currently in active daily use by clinical and administrative staff.',
+        'Developed searchable patient registries, department-filtered tables, audit logs, status tracking workflows, and print-ready report generation to support real records operations inside the hospital.',
+        'Performed continuous system maintenance, bug fixes, and feature updates in response to staff feedback, keeping the platform stable and aligned with operational needs.',
+        'Provided direct technical support for workstation hardware, software, and office network connectivity, diagnosing and resolving issues across clinical departments to minimize downtime.',
+        'Implemented role-based access control, secure document workflows, and data handling practices to protect patient information and support responsible records management.',
       ],
     },
     {
@@ -290,10 +292,11 @@ export const portfolio: PortfolioData = {
       company: 'Chans Print Solutions',
       period: '2024 - 2025',
       details: [
-        'Designed print materials including tarpaulins, business cards, brochures, and ID cards.',
-        'Operated and maintained computer systems and printing equipment for daily production tasks.',
-        'Troubleshot hardware, software, network, and printer connectivity issues.',
-        'Used AI tools and agents to support faster documentation, design planning, and technical problem solving.',
+        'Designed and produced a wide range of print materials including large-format tarpaulins, event banners, business cards, brochures, flyers, ID cards, and certificates using Adobe Photoshop and Canva — managing layouts from initial client brief to final print-ready output.',
+        'Operated and maintained large-format printing equipment, ensuring consistent print quality, accurate color output, and on-time completion of client orders under daily production pressure.',
+        'Diagnosed and resolved hardware faults, software crashes, driver issues, network connectivity problems, and printer queue errors to keep production running without significant interruption.',
+        'Used AI tools and workflow agents to speed up documentation drafts, plan design layouts, prepare technical specifications, and solve production problems faster.',
+        'Communicated directly with clients to understand design requirements, manage job timelines, and deliver finished products to specification — handling multiple concurrent orders in a fast-paced print shop environment.',
       ],
     },
     {
@@ -301,28 +304,30 @@ export const portfolio: PortfolioData = {
       company: 'UM Tagum College',
       period: '2022 - 2024',
       details: [
-        'Provided technical support to students and faculty during computer lab sessions.',
-        'Monitored equipment usage, reported malfunctions, and coordinated basic maintenance.',
-        'Troubleshot network issues and helped maintain stable internet connectivity in the lab.',
+        'Provided on-the-spot technical assistance to students and faculty during computer lab sessions — resolving hardware, software, peripheral, and application issues to keep sessions running without disruption.',
+        'Monitored workstation and equipment usage across the lab, documented malfunctions, escalated repairs to maintenance staff, and followed up to minimize turnaround time on faulty stations.',
+        'Diagnosed and resolved network and internet connectivity issues to ensure stable access for students throughout academic sessions, coordinating with IT staff when infrastructure-level fixes were required.',
+        'Supported faculty with technology setup for lab and classroom sessions, including projector connections, printer access, software configuration, and peripheral troubleshooting.',
+        'Assisted in enforcing proper lab usage policies, maintaining an organized and functional study environment that supported consistent access to institutional technology resources.',
       ],
     },
   ],
   education: [
     {
       school: 'STNHS',
-      degree: 'Accountancy and Business Management',
+      degree: 'Accountancy and Business Management (ABM)',
       period: '2015 - 2021',
       summary:
-        'Built a business-focused academic foundation in communication, organization, basic accounting, documentation, and professional presentation.',
-      strengths: ['Business foundation', 'Documentation', 'Communication'],
+        'Completed a senior high school program under the Accountancy and Business Management strand, building a structured foundation in business principles, financial literacy, professional communication, and organizational documentation. This track developed the discipline, attention to detail, and client-facing communication skills that directly support technical project coordination and records management work today.',
+      strengths: ['Business foundation', 'Documentation', 'Professional communication'],
     },
     {
       school: 'University of Mindanao',
       degree: 'Bachelor of Science in Information Technology',
       period: '2021 - 2025',
       summary:
-        'Developed practical IT knowledge across software, databases, networking, systems analysis, and technical problem solving for real operational needs.',
-      strengths: ['Systems thinking', 'Database work', 'Technical support'],
+        'Earned a BSIT degree with hands-on training across software development, relational database design, networking, systems analysis, mobile development, and IT infrastructure. Completed a capstone project focused on real-world application deployment. Graduated Class of 2025 with practical experience in both computer science fundamentals and applied system development — including the production systems currently in active use at TGMCI and a live IoT monitoring platform.',
+      strengths: ['Systems thinking', 'Database design', 'Full-stack development', 'Technical support'],
     },
   ],
   languages: ['English', 'Tagalog', 'Bisaya'],

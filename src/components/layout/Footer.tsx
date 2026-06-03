@@ -14,40 +14,35 @@ const NAV_LINKS = [
 
 function Footer({ name, onOpenCv }: FooterProps) {
   return (
-    <footer className="border-t border-white/8 bg-[#0d0c0b]">
-      {/* Main content */}
-      <div className="mx-auto max-w-300 grid gap-10 px-5 py-14 md:grid-cols-[1.2fr_0.8fr_1fr] md:py-16 lg:px-8">
-
-        {/* Col 1 — Identity + pitch */}
+    <footer className="border-t border-white/6 bg-[#0a0a0a]">
+      <div className="mx-auto max-w-300 grid gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
+        {/* Brand */}
         <div>
-          <p className="font-heading text-2xl font-bold text-[#f5f0e8]">{name}</p>
-          <p className="mt-1 font-mono-label text-xs uppercase tracking-[0.2em] text-[#f59e0b]">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl border border-[#a3e635]/30 font-mono-label text-[11px] font-bold text-[#a3e635]">
+              BD
+            </span>
+            <p className="font-mono-label text-sm font-bold tracking-wide text-white">{name}</p>
+          </div>
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#a3e635] mb-4">
             IT Specialist · AI Workflows · EMR · IoT
           </p>
-          <p className="mt-4 text-sm leading-7 text-[#7a6e62]">
-            I build systems that real organizations depend on — from hospital medical records to live IoT monitoring dashboards. If you need reliable, production-ready technical work, let's talk.
+          <p className="text-sm leading-6 text-[#555]">
+            Building production-grade systems that real organizations depend on — from hospital medical records and IoT monitoring platforms to AI-powered development workflows and full-stack web applications.
           </p>
-          <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#f59e0b]/25 bg-[#f59e0b]/10 px-4 py-2 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#f59e0b]">
-            <span
-              className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]"
-              style={{ animation: 'pulse-dot 2s ease-in-out infinite' }}
-            />
-            Available Now — Accepting Opportunities
+          <div className="mt-5 flex items-center gap-2 font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#a3e635]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#a3e635]" style={{ animation: 'pulse-dot 2s ease-in-out infinite' }} />
+            Available Now
           </div>
         </div>
 
-        {/* Col 2 — Navigation */}
+        {/* Navigation */}
         <div>
-          <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.2em] text-[#7a6e62]">
-            Navigate
-          </p>
-          <ul className="mt-4 space-y-2.5">
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#666] mb-5">Navigate</p>
+          <ul className="space-y-3">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-sm font-semibold text-[#c4b5a0] transition hover:text-[#f59e0b]"
-                >
+                <a href={link.href} className="font-mono-label text-xs uppercase tracking-[0.14em] text-[#555] transition hover:text-[#a3e635]">
                   {link.label}
                 </a>
               </li>
@@ -55,47 +50,49 @@ function Footer({ name, onOpenCv }: FooterProps) {
           </ul>
         </div>
 
-        {/* Col 3 — Contact + actions */}
+        {/* Contact */}
         <div>
-          <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.2em] text-[#7a6e62]">
-            Connect
-          </p>
-          <div className="mt-4 space-y-3 text-sm text-[#c4b5a0]">
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#666] mb-5">Connect</p>
+          <div className="space-y-3">
             <p>
-              <a href="mailto:borisdairo123@gmail.com" className="font-semibold hover:text-[#f59e0b]">
+              <a href="mailto:borisdairo123@gmail.com" className="text-sm text-[#555] transition hover:text-[#a3e635] break-all">
                 borisdairo123@gmail.com
               </a>
             </p>
             <p>
-              <a href="tel:09382180531" className="font-semibold hover:text-[#f59e0b]">
+              <a href="tel:09382180531" className="text-sm text-[#555] transition hover:text-[#a3e635]">
                 +63 938 218 0531
               </a>
             </p>
-            <p className="text-[#7a6e62]">Tagum City, Philippines · All timezones</p>
+            <p className="text-sm text-[#666]">Tagum City, Philippines</p>
           </div>
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="mt-5 flex gap-2">
             <button
               type="button"
               onClick={onOpenCv}
-              className="rounded-lg border border-white/10 px-4 py-2 font-mono-label text-xs font-bold text-[#c4b5a0] transition hover:border-[#f59e0b]/40 hover:text-[#f59e0b]"
+              className="rounded-xl border border-white/8 px-4 py-2 font-mono-label text-[11px] uppercase tracking-[0.14em] text-[#555] transition hover:border-white/20 hover:text-white"
             >
               View CV
             </button>
             <a
               href="mailto:borisdairo123@gmail.com?subject=Online%20Job%20Opportunity"
-              className="rounded-lg bg-[#f59e0b] px-4 py-2 font-mono-label text-xs font-bold text-[#111010] transition hover:bg-[#fbbf24]"
+              className="primary-button rounded-xl bg-[#a3e635] px-4 py-2 font-mono-label text-[11px] font-bold uppercase tracking-[0.14em] text-[#0a0a0a] transition hover:bg-[#84cc16]"
             >
-              Hire Me
+              Hire Me →
             </a>
           </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-white/6 px-5 py-5 lg:px-8">
-        <div className="mx-auto flex max-w-300 flex-col items-center justify-between gap-3 text-center font-mono-label text-[11px] text-[#4a3f35] sm:flex-row sm:text-left">
-          <p>© {new Date().getFullYear()} {name} · All rights reserved</p>
-          <p>Built with React · TypeScript · Tailwind CSS · Playfair Display</p>
+      <div className="border-t border-white/5 px-5 py-4 lg:px-8">
+        <div className="mx-auto flex max-w-300 flex-col items-center justify-between gap-2 text-center sm:flex-row">
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.16em] text-[#555]">
+            © {new Date().getFullYear()} {name}
+          </p>
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.16em] text-[#555]">
+            Built with React · TypeScript · Tailwind CSS
+          </p>
         </div>
       </div>
     </footer>

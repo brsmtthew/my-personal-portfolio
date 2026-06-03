@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import type { IconType } from 'react-icons'
 import {
   FiActivity,
-  FiArrowRight,
   FiCpu,
   FiDatabase,
   FiFileText,
@@ -669,7 +668,7 @@ const skillPreviewCards: SkillPreviewCard[] = [
 ]
 
 function getToolIcon(name: string) {
-  return toolIcons[name] ?? { name, icon: FiTool, color: '#00f2ea', label: 'Skill' }
+  return toolIcons[name] ?? { name, icon: FiTool, color: '#a3e635', label: 'Skill' }
 }
 
 function isActive(skill: string, activeSkills?: string[]): boolean {
@@ -701,19 +700,16 @@ function SkillChip({
 
   return (
     <span className="skill-chip inline-flex items-center gap-2 px-3 py-1 text-[10px] font-bold">
-      <span
-        className="h-1.5 w-1.5 shrink-0 rounded-full"
-        style={{ background: active ? '#f59e0b' : '#4a3f35' }}
-      />
+      <span className="h-1.5 w-1.5 shrink-0" style={{ background: active ? '#a3e635' : '#2a2a2a' }} />
       <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
       {skill}
       {tier === 'expert' && (
-        <span className="rounded bg-[#f59e0b]/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-[#f59e0b]">
+        <span className="rounded-full border border-[#a3e635]/30 px-1.5 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-[#a3e635]">
           exp
         </span>
       )}
       {tier === 'proficient' && (
-        <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-blue-400">
+        <span className="rounded-full border border-white/15 px-1.5 py-px font-mono-label text-[8px] font-bold uppercase tracking-wide text-[#666]">
           pro
         </span>
       )}
@@ -721,155 +717,117 @@ function SkillChip({
   )
 }
 
-const TYPE_CONFIG: Record<string, { icon: IconType; accent: string; bg: string }> = {
-  'AI-assisted work':    { icon: SiAnthropic,  accent: '#f59e0b', bg: 'rgba(245,158,11,0.07)' },
-  'Support operations':  { icon: FiTool,       accent: '#3b82f6', bg: 'rgba(59,130,246,0.07)' },
-  'Creative production': { icon: FiPrinter,    accent: '#ec4899', bg: 'rgba(236,72,153,0.07)' },
-  'Web app stack':       { icon: FiGlobe,      accent: '#38bdf8', bg: 'rgba(56,189,248,0.07)'  },
-  'Mobile app stack':    { icon: FiSmartphone, accent: '#22c55e', bg: 'rgba(34,197,94,0.07)'  },
-  'Desktop app stack':   { icon: FiMonitor,    accent: '#a855f7', bg: 'rgba(168,85,247,0.07)' },
-  'Stack combinations':  { icon: FiDatabase,   accent: '#14b8a6', bg: 'rgba(20,184,166,0.07)' },
-  'VA operations stack': { icon: FiActivity,   accent: '#eab308', bg: 'rgba(234,179,8,0.07)'  },
-  'Core skill stack':    { icon: FiCpu,        accent: '#f59e0b', bg: 'rgba(245,158,11,0.07)' },
-}
+const INITIAL_ROW_COUNT = 6
 
-const INITIAL_CARD_COUNT = 4
-
-function StackDrawer({ card, onClose }: { card: SkillPreviewCard; onClose: () => void }) {
-  const cfg = TYPE_CONFIG[card.type] ?? TYPE_CONFIG['Core skill stack']
-  const CategoryIcon = cfg.icon
-
+function SkillModal({ card, onClose }: { card: SkillPreviewCard; onClose: () => void }) {
   useEffect(() => {
     document.body.style.overflow = 'hidden'
-    function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') onClose()
-    }
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', onKey)
-    }
+    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', onKey) }
   }, [onClose])
 
   return (
-    <>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}>
+      {/* Backdrop */}
+      <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
+
+      {/* Modal */}
       <div
-        className="fixed inset-0 z-50 bg-[#0d0c0b]/70 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <aside
-        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-lg flex-col border-l border-white/8 bg-[#111010] shadow-2xl"
-        style={{ animation: 'slide-in-right 0.25s ease' }}
+        className="glass-card relative flex w-full max-w-2xl flex-col overflow-hidden"
+        style={{ maxHeight: '88vh', animation: 'fade-in-scale 0.22s cubic-bezier(0.34,1.56,0.64,1)' }}
         role="dialog"
         aria-modal="true"
         aria-label={`${card.title} full stack`}
       >
-        {/* sticky header */}
-        <div className="shrink-0 border-b border-white/8 p-5">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <span
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border"
-                style={{ background: cfg.bg, borderColor: `${cfg.accent}30`, color: cfg.accent }}
-              >
-                <CategoryIcon className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <div>
-                <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: cfg.accent }}>
-                  {card.type}
-                </p>
-                <h3 className="font-heading text-lg font-bold leading-tight text-[#f5f0e8]">
-                  {card.title}
-                </h3>
-              </div>
+        {/* Header */}
+        <div className="shrink-0 border-b border-white/8 p-6" style={{ background: 'rgba(255,255,255,0.04)' }}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">{card.type}</p>
+              <h3 className="mt-1 font-heading text-xl font-bold text-white">{card.title}</h3>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/8 text-[#7a6e62] transition hover:border-white/20 hover:text-[#f5f0e8]"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-white/8 text-[#555] transition hover:border-white/20 hover:text-white"
               aria-label="Close"
             >
               <FiX className="h-4 w-4" />
             </button>
           </div>
-          <p className="mt-3 rounded-lg border border-white/7 bg-white/3 p-3 text-[11px] italic leading-5 text-[#7a6e62]">
+
+          <p className="mt-4 border-l-2 border-[#a3e635]/30 pl-3 text-[12px] italic leading-5 text-[#666]">
             {card.impact}
           </p>
-          {/* mini legend */}
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 font-mono-label text-[10px] text-[#7a6e62]">
+
+          {/* Legend */}
+          <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 font-mono-label text-[10px] text-[#666]">
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
-              <span className="rounded bg-[#f59e0b]/15 px-1 text-[8px] font-bold text-[#f59e0b]">EXP</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#a3e635]" />
+              <span className="rounded-full border border-[#a3e635]/30 px-1.5 text-[8px] font-bold text-[#a3e635]">EXP</span>
               Expert
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
-              <span className="rounded bg-blue-500/15 px-1 text-[8px] font-bold text-blue-400">PRO</span>
+              <span className="h-1.5 w-1.5 rounded-full bg-[#a3e635]" />
+              <span className="rounded-full border border-white/15 px-1.5 text-[8px] font-bold text-[#666]">PRO</span>
               Proficient
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4a3f35]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#2a2a2a]" />
               Familiar — Can Adapt
             </span>
           </div>
         </div>
 
-        {/* scrollable sections */}
-        <div className="flex-1 overflow-y-auto p-5">
-          <div className="grid gap-6">
-            {card.sections ? (
-              card.sections.map((section) => {
-                const used = card.activeSkills
-                  ? section.skills.filter((s) => card.activeSkills!.includes(s))
-                  : section.skills
-                const familiar = card.activeSkills
-                  ? section.skills.filter((s) => !card.activeSkills!.includes(s))
-                  : []
-
-                return (
-                  <div key={section.title}>
-                    <p className="mb-3 font-mono-label text-[10px] font-bold uppercase tracking-[0.16em]" style={{ color: cfg.accent }}>
-                      {section.title}
-                    </p>
-                    {used.length > 0 && (
+        {/* Scrollable body */}
+        <div className="flex-1 overflow-y-auto divide-y divide-white/5">
+          {card.sections ? (
+            card.sections.map((section) => {
+              const used = card.activeSkills ? section.skills.filter((s) => card.activeSkills!.includes(s)) : section.skills
+              const familiar = card.activeSkills ? section.skills.filter((s) => !card.activeSkills!.includes(s)) : []
+              return (
+                <div key={section.title} className="p-5">
+                  <p className="mb-3 font-mono-label text-[10px] font-bold uppercase tracking-[0.22em] text-[#a3e635]">
+                    {section.title}
+                  </p>
+                  {used.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {used.map((skill) => (
+                        <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} showTier />
+                      ))}
+                    </div>
+                  )}
+                  {familiar.length > 0 && (
+                    <div className="surface-panel mt-3 border border-dashed border-white/8 p-3">
+                      <p className="mb-2 font-mono-label text-[9px] uppercase tracking-widest text-[#666]">
+                        Familiar — Can Adapt
+                      </p>
                       <div className="flex flex-wrap gap-2">
-                        {used.map((skill) => (
-                          <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} showTier />
+                        {familiar.map((skill) => (
+                          <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} />
                         ))}
                       </div>
-                    )}
-                    {familiar.length > 0 && (
-                      <div className="mt-3 rounded-xl border border-dashed border-white/10 bg-white/2 p-3">
-                        <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#7a6e62]">
-                          Familiar — Can Adapt
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {familiar.map((skill) => (
-                            <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )
-              })
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {card.skills.map((skill) => (
-                  <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} showTier />
-                ))}
-              </div>
-            )}
-          </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })
+          ) : (
+            <div className="flex flex-wrap gap-2 p-5">
+              {card.skills.map((skill) => (
+                <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} showTier />
+              ))}
+            </div>
+          )}
         </div>
-      </aside>
-    </>
+      </div>
+    </div>
   )
 }
 
 function Skills({ skillGroups }: SkillsProps) {
-  const [stackPanelCard, setStackPanelCard] = useState<SkillPreviewCard | null>(null)
+  const [activeCard, setActiveCard] = useState<SkillPreviewCard | null>(null)
   const [showAll, setShowAll] = useState(false)
 
   const groupCards: SkillPreviewCard[] = skillGroups.map((group) => ({
@@ -882,165 +840,117 @@ function Skills({ skillGroups }: SkillsProps) {
     sections: [{ title: 'Current stack', skills: group.skills }],
   }))
 
-  const allCards = [...groupCards, ...skillPreviewCards]
-  const cards = showAll ? allCards : allCards.slice(0, INITIAL_CARD_COUNT)
-  const hiddenCount = allCards.length - INITIAL_CARD_COUNT
+  const allRows = [...groupCards, ...skillPreviewCards]
+  const rows = showAll ? allRows : allRows.slice(0, INITIAL_ROW_COUNT)
+  const hiddenCount = allRows.length - INITIAL_ROW_COUNT
 
   return (
-    <section id="skills" className="border-y border-white/6 bg-[#0d0c0b] px-5 py-16 md:py-28 lg:px-8">
+    <section id="skills" className="section-glow bg-[#0f0f0f] px-5 py-20 md:py-28 lg:px-8">
       <div className="mx-auto max-w-300">
         <SectionHeading
-          eyebrow="Skills Preview"
+          eyebrow="Skills"
           title="Practical skills connected to real tools and work environments."
-          description="A client-ready view of AI agents, web systems, medical records workflows, IoT, support operations, software applications, websites, desktop apps, and creative production tools."
+          description="AI agents, web systems, EMR workflows, IoT, software applications, and creative production — organized by area and confidence level."
         />
 
-        {/* Legend */}
-        <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-3 rounded-xl border border-white/7 bg-[#1c1a18] p-4">
-          <p className="font-mono-label text-[10px] font-bold uppercase tracking-widest text-[#7a6e62]">
-            Confidence:
-          </p>
-          <span className="flex items-center gap-2 text-[11px] text-[#c4b5a0]">
-            <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
-              React.js
-              <span className="rounded bg-[#f59e0b]/15 px-1 py-px font-mono-label text-[8px] font-bold text-[#f59e0b]">EXP</span>
-            </span>
-            = Expert — deep hands-on in real projects
-          </span>
-          <span className="flex items-center gap-2 text-[11px] text-[#c4b5a0]">
-            <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#f59e0b]" />
-              Node.js
-              <span className="rounded bg-blue-500/15 px-1 py-px font-mono-label text-[8px] font-bold text-blue-400">PRO</span>
-            </span>
-            = Proficient — used in real work
-          </span>
-          <span className="flex items-center gap-2 text-[11px] text-[#c4b5a0]">
-            <span className="skill-chip inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] font-bold opacity-60">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#4a3f35]" />
-              Vue.js
-            </span>
-            = Familiar — can adapt quickly
-          </span>
+        {/* Column headers */}
+        <div data-reveal className="mb-0 grid grid-cols-[1fr_auto] items-center gap-4 border border-white/8 border-b-0 bg-white/3 px-5 py-3 backdrop-blur-sm md:grid-cols-[240px_1fr_auto]" style={{ borderRadius: '20px 20px 0 0' }}>
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#666]">Category</p>
+          <p className="hidden font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#666] md:block">Key tools</p>
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#666]">Stack</p>
         </div>
 
-        {/* Card Grid */}
-        <div className="grid gap-5 lg:grid-cols-2">
-          {cards.map((card, index) => {
-            const cfg = TYPE_CONFIG[card.type] ?? TYPE_CONFIG['Core skill stack']
-            const CategoryIcon = cfg.icon
-            const totalCount = card.sections?.reduce((t, s) => t + s.skills.length, 0) ?? card.skills.length
-            const previewSkills = card.skills.slice(0, 6)
+        {/* Skill rows */}
+        <div className="divide-y divide-white/5 border border-white/8 border-t-0 backdrop-blur-sm bg-white/2" style={{ borderRadius: '0 0 20px 20px' }}>
+          {rows.map((card, index) => {
+            const activeCount = card.activeSkills?.length ?? card.skills.length
 
             return (
-              <article
+              <button
                 key={card.title}
-                className="glass-card card-hover flex flex-col overflow-hidden"
-                style={{ borderLeft: `3px solid ${cfg.accent}40` }}
+                type="button"
+                data-reveal
+                data-reveal-delay={String(Math.min((index % 4) + 1, 4)) as '1' | '2' | '3' | '4'}
+                className="skill-row group w-full grid grid-cols-[1fr_auto] items-center gap-4 px-5 py-4 text-left md:grid-cols-[240px_1fr_auto]"
+                onClick={() => setActiveCard(card)}
               >
-                {/* Header */}
-                <div
-                  className="flex items-start justify-between gap-3 border-b border-white/10 p-5"
-                  style={{ background: cfg.bg }}
-                >
-                  <div className="flex items-center gap-3">
-                    <span
-                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border"
-                      style={{ background: cfg.bg, borderColor: `${cfg.accent}30`, color: cfg.accent }}
-                    >
-                      <CategoryIcon className="h-5 w-5" aria-hidden="true" />
-                    </span>
-                    <div>
-                      <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: cfg.accent }}>
-                        {card.type}
-                      </p>
-                      <h3 className="font-heading text-xl font-bold leading-snug text-[#f5f0e8]">
-                        {card.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <span className="mt-1 shrink-0 font-mono-label text-[10px] text-[#7a6e62]/50">
-                    #{String(index + 1).padStart(2, '0')}
-                  </span>
+                {/* Category name */}
+                <div>
+                  <p className="skill-row-accent font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#666] transition">
+                    {String(index + 1).padStart(2, '0')}
+                  </p>
+                  <p className="mt-1 font-heading text-sm font-bold text-white">{card.title}</p>
+                  <p className="mt-0.5 font-mono-label text-[10px] uppercase tracking-[0.14em] text-[#666]">{card.type}</p>
                 </div>
 
-                {/* Body */}
-                <div className="flex flex-1 flex-col gap-4 p-5">
-                  <p className="text-sm leading-6 text-[#7a6e62]">{card.description}</p>
-
-                  {/* Key tools — compact row */}
-                  <div>
-                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a3f35]">
-                      Key Tools
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {card.tools.map((toolName) => {
-                        const tool = getToolIcon(toolName)
-                        const Icon = tool.icon
-                        return (
-                          <span
-                            key={toolName}
-                            className="flex items-center gap-1.5 rounded-lg border border-white/7 bg-white/5 px-2.5 py-1.5 text-[11px] text-[#c4b5a0]"
-                          >
-                            <Icon className="h-3.5 w-3.5" style={{ color: tool.color }} aria-hidden="true" />
-                            {tool.name}
-                          </span>
-                        )
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Preview skill chips */}
-                  <div>
-                    <p className="mb-2 font-mono-label text-[9px] font-bold uppercase tracking-widest text-[#4a3f35]">
-                      Skill Preview
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {previewSkills.map((skill) => (
-                        <SkillChip key={skill} skill={skill} activeSkills={card.activeSkills} expertSkills={card.expertSkills} />
-                      ))}
-                      {card.skills.length > 6 && (
-                        <span className="skill-chip px-3 py-1 text-[10px] font-bold" style={{ color: cfg.accent }}>
-                          +{card.skills.length - 6} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* View full stack CTA */}
-                  <button
-                    type="button"
-                    className="mt-auto flex w-full items-center justify-between rounded-xl border border-white/7 bg-white/3 px-4 py-3 transition hover:border-white/12 hover:bg-white/5"
-                    onClick={() => setStackPanelCard(card)}
-                  >
-                    <span className="font-mono-label text-[10px] font-bold uppercase tracking-wider" style={{ color: cfg.accent }}>
-                      View Full Stack
+                {/* Tool icons preview */}
+                <div className="hidden flex-wrap gap-2 md:flex">
+                  {card.tools.slice(0, 5).map((toolName) => {
+                    const tool = getToolIcon(toolName)
+                    const Icon = tool.icon
+                    return (
+                      <span
+                        key={toolName}
+                        className="flex items-center gap-1.5 rounded-lg border border-white/6 bg-white/3 px-2.5 py-1 font-mono-label text-[10px] text-[#555] transition group-hover:border-white/10 group-hover:text-[#888]"
+                      >
+                        <Icon className="h-3 w-3" style={{ color: tool.color }} aria-hidden="true" />
+                        {tool.name}
+                      </span>
+                    )
+                  })}
+                  {card.tools.length > 5 && (
+                    <span className="flex items-center rounded-lg border border-white/6 bg-white/3 px-2.5 py-1 font-mono-label text-[10px] text-[#666]">
+                      +{card.tools.length - 5}
                     </span>
-                    <span className="flex items-center gap-2 font-mono-label text-[10px] text-[#7a6e62]">
-                      {totalCount} tools
-                      <FiArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                  </button>
+                  )}
                 </div>
-              </article>
+
+                {/* Count + arrow */}
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <p className="font-mono-label text-[11px] font-bold text-[#a3e635]">{activeCount}</p>
+                    <p className="font-mono-label text-[9px] uppercase tracking-widest text-[#666]">used</p>
+                  </div>
+                  <span className="font-mono-label text-[#666] transition group-hover:translate-x-1 group-hover:text-[#a3e635]">→</span>
+                </div>
+              </button>
             )
           })}
         </div>
 
-        <div className="mt-8 flex justify-center">
+        {hiddenCount > 0 && (
           <button
             type="button"
-            onClick={() => setShowAll((prev) => !prev)}
-            className="rounded-xl border border-[#f59e0b]/25 px-6 py-3 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#f59e0b] transition hover:bg-[#f59e0b] hover:text-[#111010]"
+            onClick={() => setShowAll((p) => !p)}
+            className="mt-0 w-full border border-t-0 border-white/8 py-4 font-mono-label text-[11px] uppercase tracking-[0.18em] text-[#666] transition hover:bg-white/4 hover:text-[#a3e635] backdrop-blur-sm"
+            style={{ borderRadius: '0 0 20px 20px' }}
           >
-            {showAll ? 'Show less' : `Show all skill categories (+${hiddenCount} more)`}
+            {showAll ? '↑ Show less' : `↓ Show ${hiddenCount} more categories`}
           </button>
+        )}
+
+        {/* Confidence legend */}
+        <div data-reveal className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-white/6 pt-6">
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#555]">Confidence:</p>
+          <span className="flex items-center gap-2 font-mono-label text-[10px] text-[#666]">
+            <span className="h-1.5 w-1.5 bg-[#a3e635]" />
+            <span className="border border-[#a3e635]/30 px-1 text-[8px] font-bold text-[#a3e635]">EXP</span>
+            Expert — real project experience
+          </span>
+          <span className="flex items-center gap-2 font-mono-label text-[10px] text-[#666]">
+            <span className="h-1.5 w-1.5 bg-[#a3e635]" />
+            <span className="border border-white/15 px-1 text-[8px] font-bold text-[#555]">PRO</span>
+            Proficient — used in real work
+          </span>
+          <span className="flex items-center gap-2 font-mono-label text-[10px] text-[#666]">
+            <span className="h-1.5 w-1.5 bg-[#2a2a2a]" />
+            Familiar — can adapt quickly
+          </span>
         </div>
       </div>
 
-      {stackPanelCard && (
-        <StackDrawer card={stackPanelCard} onClose={() => setStackPanelCard(null)} />
+      {activeCard && (
+        <SkillModal card={activeCard} onClose={() => setActiveCard(null)} />
       )}
     </section>
   )

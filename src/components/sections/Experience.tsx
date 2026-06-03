@@ -7,33 +7,48 @@ type ExperienceProps = {
 
 function Experience({ experiences }: ExperienceProps) {
   return (
-    <section id="experience" className="border-y border-white/6 bg-[#0d0c0b] px-5 py-16 md:py-28 lg:px-8">
-      <div className="mx-auto max-w-5xl">
+    <section id="experience" className="section-glow bg-[#0f0f0f] px-5 py-20 md:py-28 lg:px-8">
+      <div className="mx-auto max-w-300">
         <SectionHeading
           eyebrow="Experience"
-          title="Real work experience in medical records, technical support, and creative operations."
-          description="A direct timeline showing Electronic Medical Records support, accurate data handling, practical troubleshooting, and daily technical operations."
+          title="Real work across medical records, technical support, and creative operations."
         />
-        <div className="relative ml-3 space-y-6 md:ml-0">
-          <div className="absolute bottom-0 left-0 top-2 w-px bg-white/6 md:hidden" />
+
+        <div className="flex flex-col gap-5">
           {experiences.map((item, index) => (
-            <article key={`${item.role}-${item.company}`} className="glass-card card-hover relative p-6 md:p-8">
-              <span className="absolute -left-3.75 top-8 h-3 w-3 rounded-full border-2 border-[#111010] bg-[#f59e0b] shadow-[0_0_10px_rgba(245,158,11,0.7)] md:hidden" />
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <p className="font-mono-label text-[10px] uppercase tracking-[0.14em] text-[#f59e0b]/60">
-                    Milestone {String(index + 1).padStart(2, '0')}
-                  </p>
-                  <h3 className="mt-2 font-heading text-xl font-bold text-[#f5f0e8]">{item.role}</h3>
-                  <p className="mt-1 text-sm font-bold text-[#f59e0b]">{item.company}</p>
+            <article
+              key={`${item.role}-${item.company}`}
+              data-reveal
+              data-reveal-delay={String(Math.min(index + 1, 3)) as '1' | '2' | '3'}
+              className="glass-card card-hover group flex flex-col p-6 md:p-8"
+            >
+              {/* ── Header row ── */}
+              <div className="mb-5 flex flex-wrap items-start justify-between gap-x-6 gap-y-3 border-b border-white/8 pb-5">
+                <div className="flex items-start gap-4">
+                  <span className="mt-1 font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <div>
+                    <h3 className="font-heading text-lg font-bold leading-tight text-white">
+                      {item.role}
+                    </h3>
+                    <p className="mt-1 text-sm font-medium text-[#555]">{item.company}</p>
+                  </div>
                 </div>
-                <p className="rounded-full bg-white/5 px-3 py-1 font-mono-label text-[10px] uppercase text-[#7a6e62]">{item.period}</p>
+                <span className="self-start rounded-full border border-white/10 px-3 py-1 font-mono-label text-[10px] uppercase tracking-[0.14em] text-[#555]">
+                  {item.period}
+                </span>
               </div>
-              <ul className="mt-5 space-y-3">
+
+              {/* ── Bullet points — full width ── */}
+              <ul className="grid gap-3 sm:grid-cols-2">
                 {item.details.map((detail) => (
-                  <li key={detail} className="flex gap-3 text-sm leading-6 text-[#c4b5a0]">
-                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full border border-[#f59e0b] bg-[#f59e0b]/20 shadow-[0_0_6px_rgba(245,158,11,0.4)]" />
-                    <span>{detail}</span>
+                  <li
+                    key={detail}
+                    className="flex gap-3 text-sm leading-6 text-[#666] transition-colors group-hover:text-[#888]"
+                  >
+                    <span className="mt-2.5 h-1 w-4 shrink-0 rounded-full bg-[#a3e635]/35 transition group-hover:bg-[#a3e635]/70" />
+                    {detail}
                   </li>
                 ))}
               </ul>

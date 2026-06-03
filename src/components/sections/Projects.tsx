@@ -16,191 +16,200 @@ type LightboxState = {
 function Projects({ projects }: ProjectsProps) {
   const galleryRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const categories = useMemo(
-    () => ['All', ...Array.from(new Set(projects.map((project) => project.category)))],
+    () => ['All', ...Array.from(new Set(projects.map((p) => p.category)))],
     [projects],
   )
   const [activeCategory, setActiveCategory] = useState(categories[0])
   const [lightbox, setLightbox] = useState<LightboxState | null>(null)
+
   const visibleProjects =
-    activeCategory === 'All'
-      ? projects
-      : projects.filter((project) => project.category === activeCategory)
+    activeCategory === 'All' ? projects : projects.filter((p) => p.category === activeCategory)
 
-  function getProjectImages(project: Project) {
-    return [project.imageUrl, ...(project.gallery ?? [])].filter((image): image is string =>
-      Boolean(image),
-    )
+  function getImages(project: Project) {
+    return [project.imageUrl, ...(project.gallery ?? [])].filter((i): i is string => Boolean(i))
   }
 
-  function openProjectImages(project: Project, currentIndex = 0) {
-    const images = getProjectImages(project)
-    if (images.length) {
-      setLightbox({ currentIndex, images, title: project.title })
-    }
+  function openLightbox(project: Project, currentIndex = 0) {
+    const images = getImages(project)
+    if (images.length) setLightbox({ currentIndex, images, title: project.title })
   }
 
-  function stepLightbox(direction: 1 | -1) {
-    setLightbox((current) => {
-      if (!current) return current
-      return {
-        ...current,
-        currentIndex:
-          (current.currentIndex + direction + current.images.length) % current.images.length,
-      }
+  function stepLightbox(dir: 1 | -1) {
+    setLightbox((cur) => {
+      if (!cur) return cur
+      return { ...cur, currentIndex: (cur.currentIndex + dir + cur.images.length) % cur.images.length }
     })
   }
 
-  function scrollProjectGallery(projectTitle: string, direction: 1 | -1) {
-    galleryRefs.current[projectTitle]?.scrollBy({ left: direction * 260, behavior: 'smooth' })
+  function scrollGallery(title: string, dir: 1 | -1) {
+    galleryRefs.current[title]?.scrollBy({ left: dir * 260, behavior: 'smooth' })
   }
 
   return (
-    <section id="work" className="px-5 py-16 md:py-28 lg:px-8">
+    <section id="work" className="section-glow px-5 py-20 md:py-28 lg:px-8">
       <div className="mx-auto max-w-300">
         <SectionHeading
           eyebrow="Projects"
           title="Focused work examples with practical business and technical value."
-          description="Filter by area to review client-relevant experience in Medical Systems, AI Workflows, IT Support, IoT, and Creative Technical Operations."
+          description="Real systems built for medical records, IoT monitoring, and operational workflows."
         />
 
         {/* Category filters */}
-        <div className="-mx-5 mb-8 flex gap-3 overflow-x-auto px-5 pb-2 md:mx-0 md:flex-wrap md:justify-center md:px-0">
-          {categories.map((category) => {
-            const isActive = activeCategory === category
+        <div className="mb-10 flex gap-2 overflow-x-auto pb-1">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat
             return (
               <button
-                key={category}
+                key={cat}
                 type="button"
-                className={`shrink-0 rounded-full border px-4 py-2 font-mono-label text-xs font-bold transition ${
+                onClick={() => setActiveCategory(cat)}
+                className={`shrink-0 rounded-full border px-4 py-2 font-mono-label text-[11px] uppercase tracking-[0.18em] transition ${
                   isActive
-                    ? 'border-[#f59e0b] bg-[#f59e0b] text-[#111010] shadow-[0_0_18px_rgba(245,158,11,0.25)]'
-                    : 'border-white/8 bg-white/4 text-[#7a6e62] hover:border-[#f59e0b]/35 hover:bg-[#f59e0b]/8 hover:text-[#f59e0b]'
+                    ? 'border-[#a3e635] bg-[#a3e635] text-[#0a0a0a]'
+                    : 'border-white/8 text-[#666] hover:border-white/20 hover:text-white'
                 }`}
-                onClick={() => setActiveCategory(category)}
               >
-                {category}
+                {cat}
               </button>
             )
           })}
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        {/* Projects — floating glass cards alternating image side */}
+        <div className="flex flex-col gap-5">
           {visibleProjects.map((project, index) => {
-            const projectImages = getProjectImages(project)
-            return (
-              <article key={project.title} className="glass-card card-hover flex overflow-hidden p-0">
-                <div className="flex flex-1 flex-col">
-                  {project.imageUrl ? (
-                    <div className="relative border-b border-white/6 bg-[#0d0c0b]">
-                      <button
-                        type="button"
-                        className="block w-full text-left"
-                        onClick={() => openProjectImages(project, 0)}
-                        aria-label={`View ${project.title} screenshots`}
-                      >
-                        <img
-                          src={project.imageUrl}
-                          alt={project.imageAlt ?? `${project.title} project preview`}
-                          className="h-40 w-full object-cover object-top opacity-90 transition duration-300 hover:opacity-100 hover:scale-[1.01] sm:h-48"
-                        />
-                      </button>
-                      <span className="absolute left-4 top-4 rounded-full border border-[#f59e0b]/25 bg-[#111010]/90 px-3 py-1 font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#f59e0b] backdrop-blur">
-                        Project Preview
-                      </span>
-                      {projectImages.length > 1 ? (
-                        <button
-                          type="button"
-                          className="primary-button absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-lg bg-[#f59e0b] px-3 py-2 text-[11px] font-bold text-[#111010]"
-                          onClick={() => openProjectImages(project, 0)}
-                        >
-                          <FiImage className="h-4 w-4" aria-hidden="true" />
-                          View images
-                        </button>
-                      ) : null}
-                    </div>
-                  ) : null}
+            const images = getImages(project)
+            const isEven = index % 2 === 0
 
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="flex items-start justify-between gap-4">
+            return (
+              <article
+                key={project.title}
+                data-reveal
+                className="glass-card card-hover grid overflow-hidden lg:grid-cols-2"
+              >
+                {/* Image side */}
+                <div className={`relative overflow-hidden ${isEven ? 'lg:order-first' : 'lg:order-last'}`}>
+                  {project.imageUrl ? (
+                    <button
+                      type="button"
+                      onClick={() => openLightbox(project, 0)}
+                      className="group relative block h-full w-full text-left"
+                      aria-label={`View ${project.title} images`}
+                    >
+                      <img
+                        src={project.imageUrl}
+                        alt={project.imageAlt ?? `${project.title} preview`}
+                        className="h-56 w-full object-cover object-top transition duration-500 group-hover:scale-[1.02] sm:h-64 lg:h-full lg:min-h-72"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 transition group-hover:opacity-100 flex items-center justify-center">
+                        <span className="flex items-center gap-2 rounded-full border border-[#a3e635] bg-[#0a0a0a]/80 px-4 py-2 font-mono-label text-[11px] uppercase tracking-[0.16em] text-[#a3e635]">
+                          <FiImage className="h-4 w-4" />
+                          View {images.length} image{images.length !== 1 ? 's' : ''}
+                        </span>
+                      </div>
+                    </button>
+                  ) : (
+                    <div className="flex h-56 items-center justify-center bg-[#111] sm:h-64 lg:h-full lg:min-h-72">
+                      <span className="font-heading text-5xl font-black text-[#a3e635]/10">
+                        {project.title.slice(0, 2).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Type badge */}
+                  <span className="absolute left-4 top-4 rounded-full border border-[#a3e635]/30 bg-[#0a0a0a]/85 px-2.5 py-1 font-mono-label text-[10px] uppercase tracking-[0.16em] text-[#a3e635] backdrop-blur">
+                    {project.type}
+                  </span>
+                </div>
+
+                {/* Content side */}
+                <div className="flex flex-col gap-5 p-6 lg:p-8">
+                  <div>
+                    <div className="flex items-start justify-between gap-4 mb-3">
                       <div className="flex items-center gap-3">
-                        {project.logoUrl ? (
+                        {project.logoUrl && (
                           <img
                             src={project.logoUrl}
                             alt={`${project.title} logo`}
-                            className="h-11 w-11 rounded-lg border border-white/8 bg-white object-cover"
+                            className="h-9 w-9 rounded-lg border border-white/8 bg-white object-cover"
                           />
-                        ) : null}
-                        <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.14em] text-[#f59e0b]">
-                          {project.type}
+                        )}
+                        <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#666]">
+                          {project.category}
                         </p>
                       </div>
-                      <p className="font-mono-label text-[10px] text-[#7a6e62]/60">
-                        #{String(index + 1).padStart(3, '0')}
-                      </p>
+                      <span className="font-mono-label text-[10px] text-[#555]">
+                        #{String(index + 1).padStart(2, '0')}
+                      </span>
                     </div>
 
-                    <h3 className="mt-3 font-heading text-2xl font-bold leading-tight text-[#f5f0e8]">
-                      {project.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-6 text-[#c4b5a0]">{project.description}</p>
-                    <p className="shine-panel mt-3 rounded-lg border border-[#f59e0b]/15 bg-[#f59e0b]/6 p-3 text-sm italic leading-6 text-[#d4a847]">
-                      {project.impact}
-                    </p>
+                    <h3 className="font-heading text-2xl font-bold text-white">{project.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-[#666]">{project.description}</p>
 
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.stack.map((item) => (
-                        <span key={item} className="skill-chip px-3 py-1 text-[10px] font-bold">
-                          {item}
+                    {/* Impact */}
+                    <div className="shine-panel surface-panel mt-4 border-l-2 border-[#a3e635]/40 p-4">
+                      <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#a3e635] mb-1">Impact</p>
+                      <p className="text-sm leading-6 text-[#888] italic">{project.impact}</p>
+                    </div>
+                  </div>
+
+                  {/* Stack */}
+                  <div>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.stack.map((tech) => (
+                        <span key={tech} className="skill-chip px-2.5 py-1 text-[10px] font-bold">
+                          {tech}
                         </span>
                       ))}
                     </div>
 
-                    {project.gallery?.length ? (
-                      <div className="-mx-5 mt-5 border-y border-white/6 bg-[#0d0c0b] px-5 py-4">
-                        <div className="mb-3 flex items-center justify-between gap-3">
-                          <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.16em] text-[#7a6e62]">
-                            Project screens
+                    {/* Thumbnail strip */}
+                    {project.gallery && project.gallery.length > 0 && (
+                      <div className="border-t border-white/6 pt-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#666]">
+                            Screenshots
                           </p>
-                          <div className="flex gap-2">
+                          <div className="flex gap-1">
                             <button
                               type="button"
-                              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/8 text-[#c4b5a0] hover:border-[#f59e0b]/35 hover:text-[#f59e0b]"
-                              onClick={() => scrollProjectGallery(project.title, -1)}
-                              aria-label={`Scroll ${project.title} screenshots backward`}
+                              onClick={() => scrollGallery(project.title, -1)}
+                              className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/8 text-[#555] transition hover:border-[#a3e635]/30 hover:text-[#a3e635]"
+                              aria-label="Scroll backward"
                             >
-                              <FiChevronLeft className="h-4 w-4" aria-hidden="true" />
+                              <FiChevronLeft className="h-3.5 w-3.5" />
                             </button>
                             <button
                               type="button"
-                              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/8 text-[#c4b5a0] hover:border-[#f59e0b]/35 hover:text-[#f59e0b]"
-                              onClick={() => scrollProjectGallery(project.title, 1)}
-                              aria-label={`Scroll ${project.title} screenshots forward`}
+                              onClick={() => scrollGallery(project.title, 1)}
+                              className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/8 text-[#555] transition hover:border-[#a3e635]/30 hover:text-[#a3e635]"
+                              aria-label="Scroll forward"
                             >
-                              <FiChevronRight className="h-4 w-4" aria-hidden="true" />
+                              <FiChevronRight className="h-3.5 w-3.5" />
                             </button>
                           </div>
                         </div>
                         <div
                           ref={(el) => { galleryRefs.current[project.title] = el }}
-                          className="flex gap-3 overflow-x-auto scroll-smooth"
+                          className="flex gap-2 overflow-x-auto scroll-smooth"
                         >
-                          {project.gallery.map((imageUrl, galleryIndex) => (
+                          {project.gallery.map((url, gi) => (
                             <button
-                              key={imageUrl}
+                              key={url}
                               type="button"
-                              className="shrink-0 rounded border border-white/8 opacity-75 transition hover:border-[#f59e0b]/40 hover:opacity-100"
-                              onClick={() => openProjectImages(project, galleryIndex + 1)}
+                              onClick={() => openLightbox(project, gi + 1)}
+                              className="shrink-0 opacity-50 transition hover:opacity-100"
                             >
                               <img
-                                src={imageUrl}
-                                alt={`${project.title} screenshot ${galleryIndex + 1}`}
-                                className="h-14 w-24 rounded object-cover object-top sm:h-16 sm:w-32"
+                                src={url}
+                                alt={`${project.title} screenshot ${gi + 1}`}
+                                className="h-12 w-20 object-cover object-top sm:h-14 sm:w-24"
                               />
                             </button>
                           ))}
                         </div>
                       </div>
-                    ) : null}
+                    )}
                   </div>
                 </div>
               </article>
@@ -209,55 +218,56 @@ function Projects({ projects }: ProjectsProps) {
         </div>
       </div>
 
-      {lightbox ? (
-        <div className="fixed inset-0 z-80 flex items-center justify-center bg-[#0d0c0b]/92 p-4 backdrop-blur-md">
-          <div className="w-full max-w-6xl rounded-xl border border-white/8 bg-[#1c1a18] shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
+      {/* Lightbox */}
+      {lightbox && (
+        <div className="fixed inset-0 z-80 flex items-center justify-center bg-black/85 p-4 backdrop-blur-xl">
+          <div className="glass-card w-full max-w-6xl overflow-hidden">
             <div className="flex items-center justify-between gap-4 border-b border-white/8 p-4">
               <div>
-                <p className="font-mono-label text-[10px] font-bold uppercase tracking-[0.18em] text-[#f59e0b]">
-                  Project image {lightbox.currentIndex + 1} of {lightbox.images.length}
+                <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#a3e635]">
+                  {lightbox.currentIndex + 1} / {lightbox.images.length}
                 </p>
-                <h3 className="mt-1 font-heading text-lg font-bold text-[#f5f0e8]">{lightbox.title}</h3>
+                <h3 className="mt-1 font-heading text-lg font-bold text-white">{lightbox.title}</h3>
               </div>
               <button
                 type="button"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/8 text-[#c4b5a0] hover:border-[#f59e0b]/40 hover:text-[#f59e0b]"
                 onClick={() => setLightbox(null)}
-                aria-label="Close image viewer"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 text-[#666] transition hover:border-white/20 hover:text-white"
+                aria-label="Close"
               >
-                <FiX className="h-5 w-5" aria-hidden="true" />
+                <FiX className="h-5 w-5" />
               </button>
             </div>
             <div className="relative p-3 sm:p-5">
               <img
                 src={lightbox.images[lightbox.currentIndex]}
                 alt={`${lightbox.title} screenshot ${lightbox.currentIndex + 1}`}
-                className="max-h-[72vh] w-full rounded border border-white/8 object-contain"
+                className="max-h-[72vh] w-full object-contain"
               />
-              {lightbox.images.length > 1 ? (
+              {lightbox.images.length > 1 && (
                 <>
                   <button
                     type="button"
-                    className="absolute left-5 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/8 bg-[#1c1a18]/90 text-[#c4b5a0] backdrop-blur hover:border-[#f59e0b]/40 hover:text-[#f59e0b]"
                     onClick={() => stepLightbox(-1)}
-                    aria-label="Previous image"
+                    className="absolute left-5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-white/8 bg-[#111]/90 text-[#888] backdrop-blur transition hover:border-[#a3e635]/40 hover:text-[#a3e635]"
+                    aria-label="Previous"
                   >
-                    <FiChevronLeft className="h-6 w-6" aria-hidden="true" />
+                    <FiChevronLeft className="h-5 w-5" />
                   </button>
                   <button
                     type="button"
-                    className="absolute right-5 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/8 bg-[#1c1a18]/90 text-[#c4b5a0] backdrop-blur hover:border-[#f59e0b]/40 hover:text-[#f59e0b]"
                     onClick={() => stepLightbox(1)}
-                    aria-label="Next image"
+                    className="absolute right-5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-white/8 bg-[#111]/90 text-[#888] backdrop-blur transition hover:border-[#a3e635]/40 hover:text-[#a3e635]"
+                    aria-label="Next"
                   >
-                    <FiChevronRight className="h-6 w-6" aria-hidden="true" />
+                    <FiChevronRight className="h-5 w-5" />
                   </button>
                 </>
-              ) : null}
+              )}
             </div>
           </div>
         </div>
-      ) : null}
+      )}
     </section>
   )
 }

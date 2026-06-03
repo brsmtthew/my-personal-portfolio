@@ -8,50 +8,65 @@ type AboutProps = {
 
 function About({ profile, highlights }: AboutProps) {
   return (
-    <section id="about" className="px-5 py-16 md:py-28 lg:px-8">
+    <section id="about" className="section-glow px-5 py-20 md:py-28 lg:px-8">
       <div className="mx-auto max-w-300">
         <SectionHeading
           eyebrow="About"
           title="A practical IT professional who connects people, systems, and reliable workflows."
-          description="Built for employers and clients who need dependable support, accurate data handling, and technology that improves daily operations."
         />
-        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="glass-card animate-fade-up p-6">
-            <div className="mb-5 flex items-center gap-3">
-              <img
-                src={profile.photoUrl}
-                alt={`${profile.name} profile`}
-                className="h-12 w-12 rounded-full border border-[#f59e0b]/30 object-cover object-top shadow-[0_0_14px_rgba(245,158,11,0.12)]"
-              />
-              <div>
-                <p className="font-mono-label text-[10px] uppercase tracking-[0.2em] text-[#f59e0b]/70">
-                  Profile Summary
-                </p>
-                <h3 className="font-heading text-xl font-bold text-[#f5f0e8]">About Boris</h3>
-              </div>
-            </div>
-            <p className="text-base leading-8 text-[#c4b5a0] md:text-lg">{profile.summary}</p>
-            <div className="mt-6 space-y-3 text-sm text-[#7a6e62]">
-              <p>
-                <span className="font-bold text-[#f5f0e8]">Location:</span> {profile.location}
-              </p>
-              <p>
-                <span className="font-bold text-[#f5f0e8]">Availability:</span>{' '}
-                <span className="text-[#f59e0b]">{profile.availability}</span>
+
+        {/* Top row: profile card + bio */}
+        <div className="mb-6 grid items-start gap-5 lg:grid-cols-[260px_1fr]">
+          {/* Profile photo panel */}
+          <div data-reveal className="glass-card relative p-6 flex flex-col gap-4">
+            <img
+              src={profile.photoUrl}
+              alt={`${profile.name} profile`}
+              className="w-full aspect-square object-cover object-top rounded-xl"
+            />
+            <div className="space-y-2 border-t border-white/8 pt-4">
+              <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">Location</p>
+              <p className="text-sm text-[#888]">{profile.location}</p>
+              <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635] mt-3">Status</p>
+              <p className="flex items-center gap-2 text-sm text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#a3e635]" style={{ animation: 'pulse-dot 2s ease-in-out infinite' }} />
+                {profile.availability}
               </p>
             </div>
           </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {highlights.map((highlight, index) => (
-              <article key={highlight.title} className="glass-card card-hover p-6">
-                <p className="font-mono-label text-[10px] uppercase tracking-[0.18em] text-[#f59e0b]/60">
-                  Expertise {String(index + 1).padStart(2, '0')}
-                </p>
-                <h3 className="mt-4 font-heading text-lg font-bold text-[#f5f0e8]">{highlight.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#7a6e62]">{highlight.description}</p>
-              </article>
-            ))}
+
+          {/* Bio panel */}
+          <div data-reveal data-reveal-delay="1" className="glass-card p-6 lg:p-8 flex flex-col gap-6">
+            <div>
+              <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#666] mb-3">Profile Summary</p>
+              <p className="text-base leading-8 text-[#999] lg:text-lg">{profile.summary}</p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {profile.focusAreas.map((area) => (
+                <span key={area} className="skill-chip px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest">
+                  {area}
+                </span>
+              ))}
+            </div>
           </div>
+        </div>
+
+        {/* Expertise cards */}
+        <div className="grid gap-5 sm:grid-cols-3">
+          {highlights.map((highlight, index) => (
+            <article
+              key={highlight.title}
+              data-reveal
+              data-reveal-delay={String(index + 1) as '1' | '2' | '3'}
+              className="glass-card card-hover p-6 lg:p-8"
+            >
+              <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">
+                {String(index + 1).padStart(2, '0')}
+              </p>
+              <h3 className="mt-4 font-heading text-lg font-bold text-white">{highlight.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-[#666]">{highlight.description}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FiBriefcase, FiFileText, FiHome, FiLayers, FiMenu, FiMessageCircle, FiX } from 'react-icons/fi'
+import { FiAward, FiBriefcase, FiBook, FiFileText, FiHome, FiLayers, FiMenu, FiMessageCircle, FiUser, FiX } from 'react-icons/fi'
 import type { NavItem } from '../../data/portfolio'
 
 type HeaderProps = {
@@ -12,10 +12,13 @@ type HeaderProps = {
 }
 
 const mobileDockItems = [
-  { href: '#home', icon: FiHome, label: 'Home' },
-  { href: '#skills', icon: FiLayers, label: 'Skills' },
-  { href: '#work', icon: FiBriefcase, label: 'Projects' },
-  { href: '#contact', icon: FiMessageCircle, label: 'Connect' },
+  { href: '#home',       icon: FiHome,        label: 'Home'    },
+  { href: '#about',      icon: FiUser,        label: 'About'   },
+  { href: '#skills',     icon: FiLayers,      label: 'Skills'  },
+  { href: '#work',       icon: FiBriefcase,   label: 'Work'    },
+  { href: '#experience', icon: FiAward,       label: 'Exp'     },
+  { href: '#education',  icon: FiBook,        label: 'Edu'     },
+  { href: '#contact',    icon: FiMessageCircle, label: 'Contact' },
 ]
 
 function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl }: HeaderProps) {
@@ -28,63 +31,60 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
 
   return (
     <>
-      <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/8 bg-[#111010]/88 shadow-[0_1px_20px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-        <nav className="mx-auto flex h-16 max-w-300 items-center justify-between gap-4 px-5 lg:px-8">
+      <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/8 bg-[#0a0a0a]/80 backdrop-blur-xl" style={{ boxShadow: 'inset 0 -1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.4)' }}>
+        <nav className="mx-auto flex h-18 max-w-300 items-center justify-between px-5 lg:px-8">
+          {/* Logo — initials + name */}
           <button
             type="button"
-            className="group hidden shrink-0 items-center gap-3 text-left lg:flex"
+            onClick={() => handleNavigate('#home')}
+            className="group hidden items-center gap-3 lg:flex"
+          >
+            <img
+              src={photoUrl}
+              alt={`${name} profile`}
+              className="h-8 w-8 rounded-full object-cover object-top border border-white/10 transition group-hover:border-[#a3e635]/50"
+            />
+            <span className="font-mono-label text-sm font-bold tracking-wide text-white transition group-hover:text-[#a3e635]">
+              {name}
+            </span>
+          </button>
+
+          {/* Mobile: hamburger */}
+          <button
+            type="button"
+            className="order-first flex h-8 w-8 items-center justify-center rounded-xl border border-white/8 text-[#888] transition hover:border-white/20 hover:text-white lg:hidden"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setIsMenuOpen((o) => !o)}
+          >
+            {isMenuOpen ? <FiX className="h-4 w-4" /> : <FiMenu className="h-4 w-4" />}
+          </button>
+
+          {/* Mobile: name center */}
+          <button
+            type="button"
+            className="flex items-center gap-2 lg:hidden"
             onClick={() => handleNavigate('#home')}
           >
             <img
               src={photoUrl}
               alt={`${name} profile`}
-              className="h-9 w-9 rounded-full border border-[#f59e0b]/30 object-cover object-top shadow-[0_0_12px_rgba(245,158,11,0.12)] transition duration-200 group-hover:scale-105 group-hover:border-[#f59e0b]"
+              className="h-7 w-7 rounded-full object-cover object-top"
             />
-            <span className="whitespace-nowrap font-heading text-base font-bold tracking-tight text-[#f5f0e8] transition group-hover:text-[#f59e0b]">
-              {name}
-            </span>
+            <span className="font-mono-label text-sm font-bold text-white">{name.split(' ')[0]}</span>
           </button>
 
-          <button
-            type="button"
-            className="order-first flex h-10 w-10 items-center justify-center rounded-lg border border-white/8 text-[#f59e0b] hover:border-[#f59e0b]/35 hover:bg-[#f59e0b]/8 lg:hidden"
-            aria-controls="mobile-navigation"
-            aria-expanded={isMenuOpen}
-            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            onClick={() => setIsMenuOpen((open) => !open)}
-          >
-            {isMenuOpen ? <FiX className="h-5 w-5" aria-hidden="true" /> : <FiMenu className="h-5 w-5" aria-hidden="true" />}
-          </button>
-
-          <button
-            type="button"
-            className="flex min-w-0 items-center justify-center gap-2 lg:hidden"
-            onClick={() => handleNavigate('#home')}
-          >
-            <img
-              src={photoUrl}
-              alt={`${name} profile`}
-              className="h-8 w-8 rounded-full border border-[#f59e0b]/30 object-cover object-top"
-            />
-            <span className="whitespace-nowrap font-heading text-[clamp(0.72rem,3.2vw,0.95rem)] font-bold tracking-tight text-[#f5f0e8]">
-              {name}
-            </span>
-          </button>
-
-          <div className="hidden items-center gap-8 text-sm font-semibold text-[#c4b5a0] lg:flex">
+          {/* Desktop nav */}
+          <div className="hidden items-center gap-8 lg:flex">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace('#', '')
-
               return (
                 <button
                   key={item.href}
                   type="button"
-                  className={`relative shrink-0 py-2 transition ${
-                    isActive
-                      ? 'text-[#f59e0b] after:absolute after:bottom-0 after:left-1/2 after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-[#f59e0b]'
-                      : 'hover:text-[#f5f0e8]'
-                  }`}
                   onClick={() => handleNavigate(item.href)}
+                  className={`nav-item font-mono-label text-xs uppercase tracking-[0.18em] transition-colors duration-200 ${
+                    isActive ? 'nav-active text-[#a3e635]' : 'text-[#888] hover:text-white'
+                  }`}
                 >
                   {item.label}
                 </button>
@@ -92,77 +92,77 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
             })}
           </div>
 
+          {/* Desktop actions */}
           <div className="hidden items-center gap-3 lg:flex">
             <button
               type="button"
-              className="rounded-lg border border-white/8 px-5 py-2.5 text-sm font-bold text-[#c4b5a0] transition hover:border-[#f59e0b]/40 hover:text-[#f59e0b]"
               onClick={onOpenCv}
+              className="rounded-xl border border-white/10 px-4 py-2 font-mono-label text-xs uppercase tracking-[0.14em] text-[#888] transition hover:border-white/25 hover:text-white"
             >
               View CV
             </button>
             <button
               type="button"
-              className="primary-button rounded-lg bg-[#f59e0b] px-5 py-2.5 text-sm font-bold text-[#111010] transition hover:bg-[#fbbf24]"
               onClick={() => handleNavigate('#contact')}
+              className="primary-button rounded-xl bg-[#a3e635] px-4 py-2 font-mono-label text-xs font-bold uppercase tracking-[0.14em] text-[#0a0a0a] transition hover:bg-[#84cc16]"
             >
-              Hire Me
+              Hire Me →
             </button>
           </div>
 
+          {/* Mobile: CV icon */}
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/8 text-[#f59e0b] hover:border-[#f59e0b]/35 hover:bg-[#f59e0b]/8 lg:hidden"
+            className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/8 text-[#888] transition hover:border-white/20 hover:text-white lg:hidden"
             aria-label="View CV"
             onClick={onOpenCv}
           >
-            <FiFileText className="h-5 w-5" aria-hidden="true" />
+            <FiFileText className="h-4 w-4" />
           </button>
         </nav>
 
-        {isMenuOpen ? (
-          <div id="mobile-navigation" className="border-t border-white/8 bg-[#111010]/98 px-5 pb-5 lg:hidden">
-            <div className="mx-auto grid max-w-6xl gap-2 pt-3">
+        {/* Mobile dropdown */}
+        {isMenuOpen && (
+          <div className="border-t border-white/8 bg-[#0a0a0a]/90 px-5 pb-5 backdrop-blur-xl lg:hidden">
+            <div className="grid gap-1 pt-3">
               {navItems.map((item) => {
                 const isActive = activeSection === item.href.replace('#', '')
-
                 return (
                   <button
                     key={item.href}
                     type="button"
-                    className={`rounded-lg px-4 py-3 text-left font-mono-label text-xs uppercase tracking-[0.16em] ${
-                      isActive
-                        ? 'bg-[#f59e0b] text-[#111010]'
-                        : 'bg-white/5 text-[#c4b5a0] hover:bg-white/8 hover:text-[#f59e0b]'
-                    }`}
                     onClick={() => handleNavigate(item.href)}
+                    className={`px-4 py-3 text-left font-mono-label text-xs uppercase tracking-[0.18em] transition ${
+                      isActive ? 'text-[#a3e635]' : 'text-[#888] hover:text-white'
+                    }`}
                   >
-                    {item.label}
+                    {isActive ? '▶ ' : ''}{item.label}
                   </button>
                 )
               })}
             </div>
           </div>
-        ) : null}
+        )}
       </header>
 
-      <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/8 bg-[#0d0c0b]/96 px-3 py-2 backdrop-blur-xl lg:hidden">
-        <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
+      {/* Mobile bottom dock */}
+      <nav aria-label="Mobile navigation" className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#0a0a0a]/75 backdrop-blur-2xl lg:hidden" style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)' }}>
+        <div className="flex overflow-x-auto px-1" style={{ scrollbarWidth: 'none' }}>
           {mobileDockItems.map((item) => {
             const isActive = activeSection === item.href.replace('#', '')
             const Icon = item.icon
-
             return (
               <button
                 key={item.href}
                 type="button"
-                className={`rounded-lg px-2 py-2 text-center transition ${
-                  isActive ? 'text-[#f59e0b]' : 'text-[#7a6e62]'
-                }`}
                 onClick={() => handleNavigate(item.href)}
+                className={`dock-item flex flex-1 shrink-0 flex-col items-center gap-1 py-3 transition-colors duration-200 ${
+                  isActive ? 'dock-active text-[#a3e635]' : 'text-[#666] hover:text-[#999]'
+                }`}
+                style={{ minWidth: '3.2rem' }}
               >
-                <Icon className="mx-auto h-4 w-4" aria-hidden="true" />
-                <span className="mt-1 block font-mono-label text-[10px]">{item.label}</span>
-                {isActive ? <span className="mx-auto mt-1 block h-1 w-1 rounded-full bg-[#f59e0b]" /> : null}
+                <Icon className="h-4.5 w-4.5" aria-hidden="true" />
+                <span className="font-mono-label text-[8px] uppercase tracking-widest">{item.label}</span>
               </button>
             )
           })}

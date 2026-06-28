@@ -342,7 +342,7 @@ export const portfolio: PortfolioData = {
   ],
   experiences: [
     {
-      role: 'IT / Encoder',
+      role: 'IT Specialist',
       company: 'TGMCI (Electronic Medical Records)',
       period: '2025 - Present',
       details: [

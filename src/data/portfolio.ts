@@ -99,12 +99,13 @@ export const portfolio: PortfolioData = {
     availability: 'Available Now — Remote, Freelance & Full-time',
     headline: 'I ship systems teams depend on — hospital records, live IoT, and AI-powered workflows.',
     summary:
-      'IT professional and BSIT graduate with hands-on experience taking real projects from zero to deployed. I built and actively maintain a hospital-grade Medical Records Management System used daily by clinical staff — covering patient chart workflows, medical coding, document management, and role-based access control. I also designed and shipped a full ESP32 IoT monitoring platform with live Firebase telemetry, a real-time React dashboard, and sensor alert management from hardware to production. I integrate AI agents throughout my development process to accelerate research, close skill gaps quickly, and maintain consistent output quality. Precise, dependable, and focused on building systems that hold up in real operational environments. Open to remote, freelance, and full-time roles where technical depth and reliability matter.',
+      'IT professional and BSIT graduate with hands-on experience taking real projects from zero to deployed. I built and actively maintain a hospital-grade Medical Records Management System used daily by clinical staff — covering patient chart workflows, medical coding, document management, and role-based access control. I also designed and shipped a full ESP32 IoT monitoring platform with live Firebase telemetry, a real-time React dashboard, and sensor alert management from hardware to production. I extended that same IoT skill set into a smart hard hat safety system for the Bureau of Fire Protection that monitors firefighters’ body temperature, smoke, and toxic gas exposure in real time, and I built an online resort booking platform handling room reservations, live availability, and payment details. I integrate AI agents throughout my development process to accelerate research, close skill gaps quickly, and maintain consistent output quality. Precise, dependable, and focused on building systems that hold up in real operational environments. Open to remote, freelance, and full-time roles where technical depth and reliability matter.',
     focusAreas: [
       'AI WORKFLOWS',
       'ELECTRONIC MEDICAL RECORDS',
       'MEDICAL CODING',
       'IOT DEVELOPMENT',
+      'WEB APPLICATIONS',
       'TECHNICAL SUPPORT',
     ],
     photoUrl: '/boris-matthew-dairo-profile.jpg',
@@ -117,7 +118,7 @@ export const portfolio: PortfolioData = {
     ],
   },
   stats: [
-    { value: '2 Live', label: 'Production Systems Deployed' },
+    { value: '4 Live', label: 'Production Systems Deployed' },
     { value: 'BSIT', label: 'Information Technology — Class of 2025' },
     { value: 'Remote', label: 'Available Now — All Timezones' },
   ],
@@ -135,7 +136,7 @@ export const portfolio: PortfolioData = {
     {
       title: 'IoT & Full-Stack Delivery',
       description:
-        'Shipped an ESP32 IoT monitoring platform with a live React dashboard connected to Firebase. End-to-end: hardware, backend, UI, and deployment — all in production.',
+        'Builds end-to-end React + Firebase apps from hardware to UI — ESP32 IoT dashboards for miner and firefighter safety monitoring, plus an online resort booking platform. Hardware, backend, interface, and deployment all handled.',
     },
   ],
   skillGroups: [

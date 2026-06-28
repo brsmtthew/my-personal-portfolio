@@ -51,7 +51,7 @@ function Projects({ projects }: ProjectsProps) {
         <SectionHeading
           eyebrow="Projects"
           title="Focused work examples with practical business and technical value."
-          description="Real systems built for medical records, IoT monitoring, and operational workflows."
+          description="Real systems built for medical records, IoT safety monitoring, online booking, and operational workflows."
         />
 
         {/* Category filters */}

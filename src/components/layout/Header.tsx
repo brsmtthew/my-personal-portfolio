@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { FiAward, FiBriefcase, FiBook, FiFileText, FiHome, FiLayers, FiMenu, FiMessageCircle, FiUser, FiX } from 'react-icons/fi'
+import type { IconType } from 'react-icons'
+import { FiAward, FiBriefcase, FiBook, FiCheckCircle, FiFileText, FiHome, FiLayers, FiMenu, FiMessageCircle, FiUser, FiX } from 'react-icons/fi'
 import type { NavItem } from '../../data/portfolio'
 
 type HeaderProps = {
@@ -18,8 +19,19 @@ const mobileDockItems = [
   { href: '#work',       icon: FiBriefcase,   label: 'Work'    },
   { href: '#experience', icon: FiAward,       label: 'Exp'     },
   { href: '#education',  icon: FiBook,        label: 'Edu'     },
+  { href: '#certificates', icon: FiCheckCircle, label: 'Certs' },
   { href: '#contact',    icon: FiMessageCircle, label: 'Contact' },
 ]
+
+const navIcons: Record<string, IconType> = {
+  '#about': FiUser,
+  '#skills': FiLayers,
+  '#work': FiBriefcase,
+  '#experience': FiAward,
+  '#education': FiBook,
+  '#certificates': FiCheckCircle,
+  '#contact': FiMessageCircle,
+}
 
 function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -44,7 +56,7 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
               alt={`${name} profile`}
               className="h-8 w-8 rounded-full object-cover object-top border border-white/10 transition group-hover:border-[#a3e635]/50"
             />
-            <span className="font-mono-label text-sm font-bold tracking-wide text-white transition group-hover:text-[#a3e635]">
+            <span className="hidden font-mono-label text-sm font-bold tracking-wide text-white transition group-hover:text-[#a3e635] xl:inline">
               {name}
             </span>
           </button>
@@ -52,11 +64,21 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
           {/* Mobile: hamburger */}
           <button
             type="button"
-            className="order-first flex h-8 w-8 items-center justify-center rounded-xl border border-white/8 text-[#888] transition hover:border-white/20 hover:text-white lg:hidden"
+            className={`order-first flex h-8 w-8 items-center justify-center rounded-xl border transition-colors duration-200 lg:hidden ${
+              isMenuOpen
+                ? 'border-[#a3e635]/40 bg-[#a3e635]/10 text-[#a3e635]'
+                : 'border-white/8 text-[#888] hover:border-white/20 hover:text-white'
+            }`}
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((o) => !o)}
           >
-            {isMenuOpen ? <FiX className="h-4 w-4" /> : <FiMenu className="h-4 w-4" />}
+            <span
+              className="inline-flex transition-transform duration-300 ease-out"
+              style={{ transform: isMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)' }}
+            >
+              {isMenuOpen ? <FiX className="h-4 w-4" /> : <FiMenu className="h-4 w-4" />}
+            </span>
           </button>
 
           {/* Mobile: name center */}
@@ -74,7 +96,7 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
           </button>
 
           {/* Desktop nav */}
-          <div className="hidden items-center gap-8 lg:flex">
+          <div className="hidden items-center gap-5 lg:flex xl:gap-7">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace('#', '')
               return (
@@ -82,7 +104,7 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
                   key={item.href}
                   type="button"
                   onClick={() => handleNavigate(item.href)}
-                  className={`nav-item font-mono-label text-xs uppercase tracking-[0.18em] transition-colors duration-200 ${
+                  className={`nav-item font-mono-label text-xs uppercase tracking-[0.14em] transition-colors duration-200 ${
                     isActive ? 'nav-active text-[#a3e635]' : 'text-[#888] hover:text-white'
                   }`}
                 >
@@ -97,7 +119,7 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
             <button
               type="button"
               onClick={onOpenCv}
-              className="rounded-xl border border-white/10 px-4 py-2 font-mono-label text-xs uppercase tracking-[0.14em] text-[#888] transition hover:border-white/25 hover:text-white"
+              className="hidden rounded-xl border border-white/10 px-4 py-2 font-mono-label text-xs uppercase tracking-[0.14em] text-[#888] transition hover:border-white/25 hover:text-white xl:block"
             >
               View CV
             </button>
@@ -123,20 +145,44 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
 
         {/* Mobile dropdown */}
         {isMenuOpen && (
-          <div className="border-t border-white/8 bg-[#0a0a0a]/90 px-5 pb-5 backdrop-blur-xl lg:hidden">
+          <div
+            className="border-t border-white/8 bg-[#0a0a0a]/95 px-4 pb-5 backdrop-blur-xl lg:hidden"
+            style={{ animation: 'menu-drop 0.28s cubic-bezier(0.16,1,0.3,1)' }}
+          >
             <div className="grid gap-1 pt-3">
-              {navItems.map((item) => {
+              {navItems.map((item, index) => {
                 const isActive = activeSection === item.href.replace('#', '')
+                const Icon = navIcons[item.href] ?? FiHome
                 return (
                   <button
                     key={item.href}
                     type="button"
                     onClick={() => handleNavigate(item.href)}
-                    className={`px-4 py-3 text-left font-mono-label text-xs uppercase tracking-[0.18em] transition ${
-                      isActive ? 'text-[#a3e635]' : 'text-[#888] hover:text-white'
+                    style={{ animation: `menu-item-in 0.42s cubic-bezier(0.16,1,0.3,1) ${index * 0.05}s both` }}
+                    className={`group relative flex items-center gap-3 overflow-hidden rounded-xl px-4 py-3 text-left font-mono-label text-xs uppercase tracking-[0.18em] transition-colors duration-200 ${
+                      isActive ? 'bg-[#a3e635]/10 text-[#a3e635]' : 'text-[#888] hover:bg-white/4 hover:text-white'
                     }`}
                   >
-                    {isActive ? '▶ ' : ''}{item.label}
+                    {/* Active / hover accent bar */}
+                    <span
+                      className={`absolute left-0 top-1/2 w-0.5 -translate-y-1/2 rounded-r-full bg-[#a3e635] transition-all duration-300 ${
+                        isActive ? 'h-6' : 'h-0 group-hover:h-4'
+                      }`}
+                    />
+                    <Icon
+                      className={`h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110 ${
+                        isActive ? 'text-[#a3e635]' : 'text-[#555] group-hover:text-[#a3e635]'
+                      }`}
+                      aria-hidden="true"
+                    />
+                    <span className="transition-transform duration-200 group-hover:translate-x-0.5">{item.label}</span>
+                    <span
+                      className={`ml-auto font-mono-label text-[10px] tracking-normal transition-colors duration-200 ${
+                        isActive ? 'text-[#a3e635]/70' : 'text-[#444] group-hover:text-[#777]'
+                      }`}
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                   </button>
                 )
               })}
@@ -159,7 +205,7 @@ function Header({ activeSection, name, navItems, onNavigate, onOpenCv, photoUrl 
                 className={`dock-item flex flex-1 shrink-0 flex-col items-center gap-1 py-3 transition-colors duration-200 ${
                   isActive ? 'dock-active text-[#a3e635]' : 'text-[#666] hover:text-[#999]'
                 }`}
-                style={{ minWidth: '3.2rem' }}
+                style={{ minWidth: '2.5rem' }}
               >
                 <Icon className="h-4.5 w-4.5" aria-hidden="true" />
                 <span className="font-mono-label text-[8px] uppercase tracking-widest">{item.label}</span>

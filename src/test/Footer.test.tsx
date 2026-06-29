@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import Footer from '../components/layout/Footer'
 import { portfolio } from '../data/portfolio'
 
-const props = { name: portfolio.profile.name, onOpenCv: vi.fn() }
+const props = { name: portfolio.profile.name, onOpenCv: vi.fn(), languages: portfolio.languages }
 
 describe('Footer', () => {
   it('renders without crashing', () => {
@@ -33,6 +33,13 @@ describe('Footer', () => {
     render(<Footer {...props} onOpenCv={onOpenCv} />)
     fireEvent.click(screen.getByRole('button', { name: /view cv/i }))
     expect(onOpenCv).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders all languages', () => {
+    render(<Footer {...props} />)
+    portfolio.languages.forEach((lang) => {
+      expect(screen.getByText(lang)).toBeInTheDocument()
+    })
   })
 
   it('shows the current year in the copyright notice', () => {

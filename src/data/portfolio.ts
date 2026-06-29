@@ -69,6 +69,17 @@ export type Education = {
   strengths: string[]
 }
 
+export type Certificate = {
+  title: string
+  issuer: string
+  date: string
+  category: string
+  /** Preview image shown as the card thumbnail and in the lightbox. */
+  image?: string
+  /** Downloadable / openable source file (e.g. the original PDF). */
+  file?: string
+}
+
 export type PortfolioData = {
   navItems: NavItem[]
   profile: Profile
@@ -78,6 +89,7 @@ export type PortfolioData = {
   projects: Project[]
   experiences: Experience[]
   education: Education[]
+  certificates: Certificate[]
   languages: string[]
 }
 
@@ -88,6 +100,7 @@ export const portfolio: PortfolioData = {
     { label: 'Projects', href: '#work' },
     { label: 'Experience', href: '#experience' },
     { label: 'Education', href: '#education' },
+    { label: 'Certificates', href: '#certificates' },
     { label: 'Contact', href: '#contact' },
   ],
   profile: {
@@ -380,6 +393,14 @@ export const portfolio: PortfolioData = {
   ],
   education: [
     {
+      school: 'University of Mindanao',
+      degree: 'Bachelor of Science in Information Technology',
+      period: '2021 - 2025',
+      summary:
+        'Earned a BSIT degree with hands-on training across software development, relational database design, networking, systems analysis, mobile development, and IT infrastructure. Completed a capstone project focused on real-world application deployment. Graduated Class of 2025 with practical experience in both computer science fundamentals and applied system development — including the production systems currently in active use at TGMCI and a live IoT monitoring platform.',
+      strengths: ['Systems thinking', 'Database design', 'Full-stack development', 'Technical support'],
+    },
+    {
       school: 'STNHS',
       degree: 'Accountancy and Business Management (ABM)',
       period: '2015 - 2021',
@@ -387,13 +408,119 @@ export const portfolio: PortfolioData = {
         'Completed a senior high school program under the Accountancy and Business Management strand, building a structured foundation in business principles, financial literacy, professional communication, and organizational documentation. This track developed the discipline, attention to detail, and client-facing communication skills that directly support technical project coordination and records management work today.',
       strengths: ['Business foundation', 'Documentation', 'Professional communication'],
     },
+  ],
+  certificates: [
     {
-      school: 'University of Mindanao',
-      degree: 'Bachelor of Science in Information Technology',
-      period: '2021 - 2025',
-      summary:
-        'Earned a BSIT degree with hands-on training across software development, relational database design, networking, systems analysis, mobile development, and IT infrastructure. Completed a capstone project focused on real-world application deployment. Graduated Class of 2025 with practical experience in both computer science fundamentals and applied system development — including the production systems currently in active use at TGMCI and a live IoT monitoring platform.',
-      strengths: ['Systems thinking', 'Database design', 'Full-stack development', 'Technical support'],
+      title: 'EDCS-IS Users’ Online Training',
+      issuer: 'DOH Academy — Epidemiology Bureau',
+      date: 'June 2026',
+      category: 'Medical & Health',
+      image: '/certificates/edcs-is-training.png',
+    },
+    {
+      title: 'Online Training on Basic Epidemiology',
+      issuer: 'DOH Academy',
+      date: 'June 2026',
+      category: 'Medical & Health',
+      image: '/certificates/basic-epidemiology.png',
+    },
+    {
+      title: 'Practicing Data Privacy in the Workplace',
+      issuer: 'TESDA — Online Program',
+      date: 'April 2026',
+      category: 'Professional',
+      image: '/certificates/data-privacy-tesda.png',
+    },
+    {
+      title: 'On-the-Job Training Completion (486 Hours)',
+      issuer: 'UM Tagum College',
+      date: 'February 2026',
+      category: 'Professional',
+      image: '/certificates/ojt-completion.png',
+    },
+    {
+      title: 'OJT Internship Completion (486 Hours)',
+      issuer: 'Tagum Global Medical Center, Inc.',
+      date: 'February 2026',
+      category: 'Professional',
+      image: '/certificates/ojt-tgmci.png',
+    },
+    {
+      title: 'Work Ethics Seminar',
+      issuer: 'UM Tagum College',
+      date: 'September 2025',
+      category: 'Professional',
+      image: '/certificates/work-ethics-seminar.png',
+    },
+    {
+      title: 'Pre-Deployment Orientation Seminar (PDOS)',
+      issuer: 'UM Tagum College',
+      date: 'September 2025',
+      category: 'Professional',
+      image: '/certificates/pdos-seminar.png',
+    },
+    {
+      title: 'Anti-Sexual Harassment Seminar',
+      issuer: 'UM Tagum College',
+      date: 'September 2025',
+      category: 'Professional',
+      image: '/certificates/anti-harassment-seminar.png',
+    },
+    {
+      title: 'Pre-Employment Seminar for Local Applicants (PESLA)',
+      issuer: 'UM Tagum College — Job Placement Office',
+      date: 'November 2024',
+      category: 'Professional',
+      image: '/certificates/pesla-seminar.jpg',
+    },
+    {
+      title: 'Building Front-End Tools & Robust Back-End Systems',
+      issuer: 'ICTCON 2024 — DICT, DevCon Davao & Tagum City',
+      date: 'October 2024',
+      category: 'Development',
+      image: '/certificates/ictcon-2024-fullstack.jpg',
+    },
+    {
+      title: 'Graphic Designing Basics: Introduction to Photoshop',
+      issuer: 'UM Tagum College',
+      date: 'October 2024',
+      category: 'Design & Creative',
+      image: '/certificates/photoshop-basics-completion.jpg',
+    },
+    {
+      title: 'Photoshop Workshop — Active Participation',
+      issuer: 'UM Tagum College',
+      date: 'October 2024',
+      category: 'Design & Creative',
+      image: '/certificates/photoshop-basics-appreciation.jpg',
+    },
+    {
+      title: 'Virtual Assistant 101 & Social Media Management',
+      issuer: 'VirtuaLearn Academy',
+      date: 'October 2024',
+      category: 'Design & Creative',
+      image: '/certificates/virtual-assistant-101-virtualearn.jpg',
+    },
+    {
+      title: 'Virtual Assistant 101 & Social Media Management',
+      issuer: 'UM Tagum College',
+      date: 'October 2024',
+      category: 'Design & Creative',
+      image: '/certificates/virtual-assistant-101-umtc.jpg',
+    },
+    {
+      title: '3D Modeling Basics: Building Skills for Creative Freedom',
+      issuer: 'UM Tagum College',
+      date: 'September 2024',
+      category: 'Design & Creative',
+      image: '/certificates/3d-modeling-basics.jpg',
+    },
+    {
+      title: 'Emerging Trends in Computer Networks Technology',
+      issuer: 'UM Tagum College — Computer Debuggers Society',
+      date: 'September 2023',
+      category: 'Development',
+      image: '/certificates/computer-networks-seminar.jpg',
     },
   ],
   languages: ['English', 'Tagalog', 'Bisaya'],

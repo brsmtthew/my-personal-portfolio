@@ -16,22 +16,38 @@ function About({ profile, highlights }: AboutProps) {
         />
 
         {/* Top row: profile card + bio */}
-        <div className="mb-6 grid items-start gap-5 lg:grid-cols-[260px_1fr]">
+        <div className="mb-6 grid items-stretch gap-5 lg:grid-cols-[260px_1fr]">
           {/* Profile photo panel */}
-          <div data-reveal className="glass-card relative p-6 flex flex-col gap-4">
+          <div data-reveal className="glass-card relative p-6 flex flex-col gap-5">
             <img
               src={profile.photoUrl}
               alt={`${profile.name} profile`}
               className="w-full aspect-square object-cover object-top rounded-xl"
             />
-            <div className="space-y-2 border-t border-white/8 pt-4">
-              <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">Location</p>
-              <p className="text-sm text-[#888]">{profile.location}</p>
-              <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635] mt-3">Status</p>
-              <p className="flex items-center gap-2 text-sm text-white">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#a3e635]" style={{ animation: 'pulse-dot 2s ease-in-out infinite' }} />
-                {profile.availability}
-              </p>
+            <div>
+              <h3 className="font-heading text-lg font-bold leading-tight text-white">{profile.name}</h3>
+              <p className="mt-1.5 text-xs leading-5 text-[#777]">{profile.role}</p>
+            </div>
+            <div className="flex flex-1 flex-col gap-4 border-t border-white/8 pt-4">
+              <div className="space-y-1">
+                <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">Location</p>
+                <p className="text-sm text-[#888]">{profile.location}</p>
+              </div>
+              <div className="space-y-1">
+                <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">Email</p>
+                <a href={`mailto:${profile.email}`} className="block break-all text-sm text-[#888] transition hover:text-[#a3e635]">{profile.email}</a>
+              </div>
+              <div className="space-y-1">
+                <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">Phone</p>
+                <a href={`tel:${profile.phone}`} className="block text-sm text-[#888] transition hover:text-[#a3e635]">{profile.phone}</a>
+              </div>
+              <div className="mt-auto space-y-1">
+                <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#a3e635]">Status</p>
+                <p className="flex items-center gap-2 text-sm text-white">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#a3e635]" style={{ animation: 'pulse-dot 2s ease-in-out infinite' }} />
+                  {profile.availability}
+                </p>
+              </div>
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 type FooterProps = {
   name: string
   onOpenCv: () => void
+  languages: string[]
 }
 
 const NAV_LINKS = [
@@ -12,10 +13,10 @@ const NAV_LINKS = [
   { label: 'Contact', href: '#contact' },
 ]
 
-function Footer({ name, onOpenCv }: FooterProps) {
+function Footer({ name, onOpenCv, languages }: FooterProps) {
   return (
     <footer className="border-t border-white/6 bg-[#0a0a0a]">
-      <div className="mx-auto max-w-300 grid gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
+      <div className="mx-auto max-w-300 grid gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_0.9fr_1.1fr] lg:px-8">
         {/* Brand */}
         <div>
           <div className="flex items-center gap-3 mb-4">
@@ -48,6 +49,22 @@ function Footer({ name, onOpenCv }: FooterProps) {
               </li>
             ))}
           </ul>
+        </div>
+
+        {/* Languages */}
+        <div>
+          <p className="font-mono-label text-[10px] uppercase tracking-[0.22em] text-[#666] mb-5">Languages</p>
+          <ul className="space-y-3">
+            {languages.map((lang) => (
+              <li key={lang} className="flex items-center justify-between gap-4">
+                <span className="text-sm font-semibold text-white">{lang}</span>
+                <span className="font-mono-label text-[10px] uppercase tracking-wider text-[#a3e635]">Fluent</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 text-xs leading-5 text-[#555]">
+            Comfortable in daily support, documentation, and client coordination.
+          </p>
         </div>
 
         {/* Contact */}

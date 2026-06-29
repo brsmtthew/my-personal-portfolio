@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { FiArrowUp } from 'react-icons/fi'
 import { Footer, Header } from './components/layout'
-import { About, Contact, Education, Experience, Hero, Projects, Skills } from './components/sections'
+import { About, Certificates, Contact, Education, Experience, Hero, Projects, Skills } from './components/sections'
 import { CvModal } from './components/ui'
 import { portfolio } from './data/portfolio'
 import { useReveal } from './hooks/useReveal'
@@ -140,17 +140,18 @@ function App() {
         <Skills skillGroups={portfolio.skillGroups} />
         <Projects projects={portfolio.projects} />
         <Experience experiences={portfolio.experiences} />
-        <Education education={portfolio.education} languages={portfolio.languages} />
+        <Education education={portfolio.education} />
+        <Certificates certificates={portfolio.certificates} />
         <Contact onOpenCv={() => setIsCvModalOpen(true)} profile={portfolio.profile} />
       </main>
-      <Footer name={portfolio.profile.name} onOpenCv={() => setIsCvModalOpen(true)} />
+      <Footer name={portfolio.profile.name} onOpenCv={() => setIsCvModalOpen(true)} languages={portfolio.languages} />
       <CvModal cvUrl={portfolio.profile.cvUrl} isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
 
       <button
         ref={backToTopRef}
         type="button"
         onClick={() => scrollToSection('#home')}
-        className="fixed bottom-24 right-5 z-50 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-[#0a0a0a] text-[#666] transition hover:border-[#a3e635]/50 hover:text-[#a3e635] md:bottom-8 md:right-8"
+        className="fixed bottom-24 right-5 z-50 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-[#0a0a0a] text-[#666] transition hover:-translate-y-0.5 hover:scale-110 hover:border-[#a3e635]/50 hover:text-[#a3e635] md:bottom-8 md:right-8"
         style={{ opacity: 0, pointerEvents: 'none' }}
         aria-label="Back to top"
       >

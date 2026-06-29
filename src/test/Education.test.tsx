@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import Education from '../components/sections/Education'
 import { portfolio } from '../data/portfolio'
 
-const props = { education: portfolio.education, languages: portfolio.languages }
+const props = { education: portfolio.education }
 
 describe('Education', () => {
   it('renders without crashing', () => {
@@ -35,13 +35,6 @@ describe('Education', () => {
       edu.strengths.forEach((strength) => {
         expect(screen.getByText(strength)).toBeInTheDocument()
       })
-    })
-  })
-
-  it('renders the languages panel with all languages', () => {
-    render(<Education {...props} />)
-    portfolio.languages.forEach((lang) => {
-      expect(screen.getByText(lang)).toBeInTheDocument()
     })
   })
 })

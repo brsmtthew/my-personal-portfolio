@@ -66,7 +66,7 @@ function Hero({ profile, stats, onNavigate }: HeroProps) {
         {/* ── NAME — each word fades up with stagger ── */}
         <h1
           className="font-heading font-black text-white"
-          style={{ fontSize: 'min(7rem, 5.5vw)', lineHeight: 1.0, letterSpacing: '-0.03em', whiteSpace: 'nowrap' }}
+          style={{ fontSize: 'min(6rem, 7.5vw)', lineHeight: 1.05, letterSpacing: '-0.03em', whiteSpace: 'nowrap' }}
         >
           {nameWords.map((word, i) => (
             <Fragment key={i}>

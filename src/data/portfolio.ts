@@ -244,7 +244,9 @@ export const portfolio: PortfolioData = {
         'SpO2',
         'Realtime Dashboard',
       ],
-      links: [],
+      links: [
+        { label: 'Live Demo', href: 'https://smart-chest-miner.firebaseapp.com/login' },
+      ],
     },
     {
       title: 'Medical Records Management System',
@@ -285,7 +287,9 @@ export const portfolio: PortfolioData = {
         'Report Export',
         'Local Chart Preview',
       ],
-      links: [],
+      links: [
+        { label: 'Live Demo', href: 'https://medical-records-system-e05e9.web.app/' },
+      ],
     },
     {
       title: 'BFP SmartTrack',
@@ -319,7 +323,9 @@ export const portfolio: PortfolioData = {
         'Risk Analytics',
         'Role-Based Access',
       ],
-      links: [],
+      links: [
+        { label: 'Live Demo', href: 'https://bfpmonitoringsystem.web.app/' },
+      ],
     },
     {
       title: 'SixWorld Adventures',
@@ -350,7 +356,9 @@ export const portfolio: PortfolioData = {
         'GCash and Bank Payments',
         'Responsive UI',
       ],
-      links: [],
+      links: [
+        { label: 'Live Demo', href: 'https://sixworld-booking-demo.example.com' },
+      ],
     },
   ],
   experiences: [
@@ -523,5 +531,5 @@ export const portfolio: PortfolioData = {
       image: '/certificates/computer-networks-seminar.jpg',
     },
   ],
-  languages: ['English', 'Tagalog', 'Bisaya'],
+  languages: ['English', 'Tagalog'],
 }

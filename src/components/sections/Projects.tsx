@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
-import { FiChevronLeft, FiChevronRight, FiImage, FiX } from 'react-icons/fi'
+import { FiChevronLeft, FiChevronRight, FiImage, FiX, FiExternalLink } from 'react-icons/fi'
 import SectionHeading from '../ui/SectionHeading'
 import type { Project } from '../../data/portfolio'
 
@@ -210,9 +210,32 @@ function Projects({ projects }: ProjectsProps) {
                         </div>
                       </div>
                     )}
+
+                    {/* Project Links */}
+                    {project.links && project.links.length > 0 && (
+                      <div className={`flex flex-wrap gap-2 ${
+                        project.gallery && project.gallery.length > 0
+                          ? 'mt-3'
+                          : 'mt-4 border-t border-white/6 pt-4'
+                      }`}>
+                        {project.links.map((link) => (
+                          <a
+                            key={link.label}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 rounded-xl px-4 py-2 font-mono-label text-[11px] uppercase tracking-[0.14em] transition primary-button bg-[#a3e635] font-bold text-[#0a0a0a] hover:bg-[#84cc16]"
+                          >
+                            <FiExternalLink className="h-3.5 w-3.5" />
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </article>
+
             )
           })}
         </div>

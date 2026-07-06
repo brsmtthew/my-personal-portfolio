@@ -194,7 +194,9 @@ section[id] { scroll-margin-top: 80px; }
 .shine-panel:hover::before { transform: translateX(100%); }
 
 /* ── Mobile safe bottom ── */
-.mobile-safe-bottom { padding-bottom: calc(5rem + env(safe-area-inset-bottom)); }
+@media (max-width: 1023px) {
+  .mobile-safe-bottom { padding-bottom: calc(5rem + env(safe-area-inset-bottom)); }
+}
 
 /* ── Stack carousel ── */
 .stack-carousel { animation: stack-scroll 38s linear infinite; }
@@ -369,6 +371,66 @@ section[id] { scroll-margin-top: 80px; }
     radial-gradient(ellipse 80% 55% at 15% 35%, rgba(163,230,53,0.05), transparent 58%),
     radial-gradient(ellipse 60% 45% at 85% 65%, rgba(132,204,22,0.03), transparent 52%);
 }
+
+/* ── Footer social icon buttons ── */
+.footer-social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.35);
+  transition:
+    color 200ms ease,
+    background 200ms ease,
+    border-color 200ms ease,
+    transform 220ms cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow 200ms ease;
+}
+.footer-social-icon:hover {
+  color: #a3e635;
+  background: rgba(163,230,53,0.1);
+  border-color: rgba(163,230,53,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(163,230,53,0.18);
+}
+.footer-social-icon:active { transform: scale(0.93); }
+
+/* Single-row icon strip — hide scrollbar, allow overflow scroll */
+.footer-icon-row { scrollbar-width: none; -ms-overflow-style: none; }
+.footer-icon-row::-webkit-scrollbar { display: none; }
+
+
+.footer-job-icon:hover {
+  color: #38bdf8;
+  background: rgba(56,189,248,0.1);
+  border-color: rgba(56,189,248,0.3);
+  box-shadow: 0 6px 20px rgba(56,189,248,0.15);
+}
+.footer-job-icon-sm:hover { color: #38bdf8; }
+
+
+/* Compact variant for the bottom bar */
+.footer-social-icon-sm {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  color: rgba(255,255,255,0.25);
+  transition:
+    color 180ms ease,
+    transform 200ms cubic-bezier(0.34,1.56,0.64,1);
+}
+.footer-social-icon-sm:hover {
+  color: #a3e635;
+  transform: translateY(-2px);
+}
+.footer-social-icon-sm:active { transform: scale(0.9); }
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {

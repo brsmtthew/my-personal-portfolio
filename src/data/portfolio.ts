@@ -15,6 +15,7 @@ export type Profile = {
   focusAreas: string[]
   photoUrl: string
   cvUrl: string
+  atsCvUrl: string
   socials: SocialLink[]
 }
 
@@ -123,6 +124,7 @@ export const portfolio: PortfolioData = {
     ],
     photoUrl: '/boris-matthew-dairo-profile.jpg',
     cvUrl: '/boris-matthew-dairo-cv.pdf',
+    atsCvUrl: '/Boris_Matthew_Dairo_ATS_Resume.pdf',
     socials: [
       { label: 'Email', href: 'mailto:borisdairo123@gmail.com' },
       { label: 'Call', href: 'tel:09382180531' },

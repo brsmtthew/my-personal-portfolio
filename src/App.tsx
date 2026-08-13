@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { FiArrowUp } from 'react-icons/fi'
 import { Footer, Header } from './components/layout'
 import { About, Certificates, Contact, Education, Experience, Hero, Projects, Skills } from './components/sections'
-import { CvModal } from './components/ui'
+import { AtsResume, CvModal } from './components/ui'
 import { portfolio } from './data/portfolio'
 import { useReveal } from './hooks/useReveal'
 
@@ -11,12 +11,18 @@ const HEADER_OFFSET = 72
 function App() {
   const [activeSection, setActiveSection] = useState('home')
   const [isCvModalOpen, setIsCvModalOpen] = useState(false)
+  const [isAtsMode, setIsAtsMode] = useState(() => window.localStorage.getItem('portfolio-view') === 'ats')
   const [isLoaded, setIsLoaded] = useState(false)
   const [loadingMounted, setLoadingMounted] = useState(true)
   const progressBarRef = useRef<HTMLDivElement>(null)
   const backToTopRef = useRef<HTMLButtonElement>(null)
 
   useReveal()
+
+  useEffect(() => {
+    window.localStorage.setItem('portfolio-view', isAtsMode ? 'ats' : 'portfolio')
+    if (isAtsMode) window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [isAtsMode])
 
   const scrollToSection = useCallback((hash: string, behavior: ScrollBehavior = 'smooth') => {
     const id = hash.replace('#', '') || 'home'
@@ -102,7 +108,7 @@ function App() {
   }, [isCvModalOpen])
 
   return (
-    <div className="mobile-safe-bottom relative min-h-screen overflow-x-hidden bg-[#0a0a0a] text-[#f0f0f0]">
+    <div className={`mobile-safe-bottom relative min-h-screen overflow-x-hidden bg-[#0a0a0a] text-[#f0f0f0] ${isAtsMode ? 'ats-mode' : ''}`}>
       {/* Loading screen */}
       {loadingMounted && (
         <div
@@ -133,19 +139,27 @@ function App() {
         onNavigate={handleNavigate}
         onOpenCv={() => setIsCvModalOpen(true)}
         photoUrl={portfolio.profile.photoUrl}
+        isAtsMode={isAtsMode}
+        onToggleAts={() => setIsAtsMode((value) => !value)}
       />
-      <main className="pt-18">
-        <Hero profile={portfolio.profile} stats={portfolio.stats} onNavigate={handleNavigate} />
-        <About profile={portfolio.profile} highlights={portfolio.highlights} />
-        <Skills skillGroups={portfolio.skillGroups} />
-        <Projects projects={portfolio.projects} />
-        <Experience experiences={portfolio.experiences} />
-        <Education education={portfolio.education} />
-        <Certificates certificates={portfolio.certificates} />
-        <Contact onOpenCv={() => setIsCvModalOpen(true)} profile={portfolio.profile} />
-      </main>
-      <Footer name={portfolio.profile.name} onOpenCv={() => setIsCvModalOpen(true)} languages={portfolio.languages} />
-      <CvModal cvUrl={portfolio.profile.cvUrl} isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
+      {isAtsMode ? (
+        <AtsResume portfolio={portfolio} onToggleAts={() => setIsAtsMode(false)} />
+      ) : (
+        <>
+          <main className="pt-18">
+            <Hero profile={portfolio.profile} stats={portfolio.stats} onNavigate={handleNavigate} />
+            <About profile={portfolio.profile} highlights={portfolio.highlights} />
+            <Skills skillGroups={portfolio.skillGroups} />
+            <Projects projects={portfolio.projects} />
+            <Experience experiences={portfolio.experiences} />
+            <Education education={portfolio.education} />
+            <Certificates certificates={portfolio.certificates} />
+            <Contact onOpenCv={() => setIsCvModalOpen(true)} profile={portfolio.profile} />
+          </main>
+          <Footer name={portfolio.profile.name} onOpenCv={() => setIsCvModalOpen(true)} languages={portfolio.languages} />
+        </>
+      )}
+      <CvModal cvUrl={isAtsMode ? portfolio.profile.atsCvUrl : portfolio.profile.cvUrl} isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
 
       <button
         ref={backToTopRef}
